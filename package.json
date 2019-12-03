@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "CCS Portal for CodeChef VIT.",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "hbs": "^4.0.4",
+    "mongodb": "^3.2.5",
+    "mongoose": "^5.5.13",
+    "path": "^0.12.7",
+    "validator": "^11.0.0"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "node app.js",
