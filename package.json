@@ -1,0 +1,33 @@
+{
+  "name": "codechef-recruitment-portal",
+  "version": "1.0.0",
+  "description": "CCS Portal for CodeChef VIT.",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshatvg/CodeChef-Recruitment-Portal.git"
+  },
+  "keywords": [
+    "recruitments",
+    "vit",
+    "codechef",
+    "clubs",
+    "chapters",
+    "technical",
+    "management",
+    "design",
+    "join"
+  ],
+  "author": "Akshat Gupta & Navyaa Sharma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akshatvg/CodeChef-Recruitment-Portal/issues"
+  },
+  "homepage": "https://github.com/akshatvg/CodeChef-Recruitment-Portal#readme"
+}
