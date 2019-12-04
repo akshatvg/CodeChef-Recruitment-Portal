@@ -34,64 +34,101 @@
 			</div>
 			<nav>
 				<ul>
-					<li><a href="#intro">Intro</a></li>
-					<li><a href="#work">Work</a></li>
 					<li><a href="#about">About</a></li>
+					<li><a href="#instructions">Instructions</a></li>
+					<li><a href="#sign-up">Register</a></li>
 					<li><a href="#contact">Contact</a></li>
-					<!--<li><a href="#elements">Elements</a></li>-->
 				</ul>
 			</nav>
+
+			<nav>
+				<ul>
+					<li><a href="#login">Sign In Here</a></li>
+				</ul>
+			</nav>
+
 		</header>
 
 		<!-- Main -->
 		<div id="main">
 
-			<!-- Intro -->
-			<article id="intro">
-				<h2 class="major">Intro</h2>
-				<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-				<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum
-					congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut
-					magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a
-						href="#work">awesome work</a>.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent
-					taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique
-					libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut
-					ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor.
-					Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique
-					senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus.
-					Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-			</article>
-
-			<!-- Work -->
-			<article id="work">
-				<h2 class="major">Work</h2>
-				<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-				<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac.
-					Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer
-					sollicitudin mauris nec lorem luctus ultrices.</p>
-				<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna
-					sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas
-					laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat
-					tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat
-					tempus.</p>
-			</article>
-
 			<!-- About -->
 			<article id="about">
 				<h2 class="major">About Us</h2>
-				<p class="d-flex justify-content-center">CodeChef is a not-for-profit educational initiative by Directi,
+				<p class="about-txt">CodeChef is a not-for-profit educational initiative by Directi,
 					an Indian software company. It is a
 					global programming community that fosters learning and friendly competition, built on top of the
 					world’s largest competitive programming platform. We have also built a large community of problem
 					curators.</p>
-				<p class="d-flex justify-content-center">In Vellore Institute of Technology, CodeChef-VIT is a technical
+				<p class="about-txt">In Vellore Institute of Technology, CodeChef-VIT is a technical
 					chapter that helps students all over
 					the
 					campus to improve their coding skills. The core committee members of the chapters are divided into
 					four areas of expertise- Technical, Projects, Management and Design. The main objective is to
 					provide the students a platform where they can learn, share and test their knowledge. CodeChef- VIT
 					keeps conducting several workshops and events in order to help the students do the same.</p>
+				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
+			</article>
+
+			<!-- Instructions -->
+			<article id="instructions">
+				<h2 class="major">Instructions</h2>
+				<p class="about-txt">
+					1) Register yourself on the portal (use your VIT email ID). You'll be redirected back to the home
+					page once the user is created.
+				</p>
+				<p class="about-txt">
+					2) Sign In to your account using the same credentials.
+				</p>
+				<p class="about-txt">
+					3) You have a total of 1 hour to attempt whichever domain's questions you want.
+				</p>
+				<p class="about-txt">
+					4) Once you leave a
+					domain's test, you won't be allowed to give it again.
+				</p>
+				<p class="about-txt">
+					5) You are allowed to attempt questions from all
+					domains.
+				</p>
+				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
+			</article>
+
+			<!-- Sign Up Page -->
+			<article id="sign-up">
+				<h2 class="major">Sign Up</h2>
+				<form action="/userSignup" method="post" role="form">
+					<div class="fields">
+						<div class="field half">
+							<label for="first_name">First Name</label>
+							<input type="text" name="first_name" id="first_name" required />
+						</div>
+						<div class="field half">
+							<label for="last_name">Last Name</label>
+							<input type="text" name="last_name" id="last_name" required />
+						</div>
+						<div class="field half">
+							<label for="email">VIT Email</label>
+							<input type="text" name="email" id="email" required />
+						</div>
+						<div class="field half">
+							<label for="regno">Registration Number</label>
+							<input type="text" name="regno" id="regno" required />
+						</div>
+						<div class="field half">
+							<label for="phoneno">Phone Number</label>
+							<input type="text" name="phoneno" id="phoneno" required />
+						</div>
+						<div class="field half">
+							<label for="password">Password</label>
+							<input type="password" name="password" id="password" required />
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Sign Up" class="primary" /></li>
+						<li><input type="reset" value="Reset" class="reset" /></li>
+					</ul>
+				</form>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
 			</article>
 
@@ -115,7 +152,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Send Message" class="primary" /></li>
-						<li><input type="reset" value="Reset" /></li>
+						<li><input type="reset" value="Reset" class="reset" /></li>
 					</ul>
 				</form>
 				<ul class="icons">
@@ -128,6 +165,30 @@
 					<li><a href="https://www.linkedin.com/company/codechef-vit-chapter/about"
 							class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
 				</ul>
+				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
+			</article>
+
+			<!-- Login Page -->
+			<article id="login">
+				<h2 class="major">Sign In</h2>
+				<form action="/userLogin" method="post" role="form">
+					<div class="fields">
+
+						<div class="field half">
+							<label for="email">VIT Email</label>
+							<input type="text" name="email" id="email" required />
+						</div>
+						<div class="field half">
+							<label for="password">Password</label>
+							<input type="password" name="password" id="password" required />
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Sign In" class="primary" /></li>
+						<li><input type="reset" value="Reset" class="reset" /></li>
+					</ul>
+				</form>
+				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
 			</article>
 
 		</div>
