@@ -1,4 +1,5 @@
-var db = {
-    mongoDB: process.env.MONGO_DB || process.env.MONGODB
+
+var db={
+    mongoDB:process.env.MONGO_DB || process.env.MONGODB
 }
-module.exports = db
+module.exports=db

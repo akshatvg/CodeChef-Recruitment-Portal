@@ -1,7 +1,7 @@
 var mongoose=require('mongoose')
 //var validator=require('validator')
 
-mongoose.connect('mongodb://localhost:27017/ques',{useNewUrlParser:true})
+//mongoose.connect('mongodb://localhost:27017/ques',{useNewUrlParser:true})
 
 var ques=new mongoose.Schema({
     ques:{

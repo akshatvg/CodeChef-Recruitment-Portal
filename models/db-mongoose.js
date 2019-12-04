@@ -1,8 +1,6 @@
 var mongoose=require('mongoose')
 var validator=require('validator')
 
-mongoose.connect('mongodb://localhost:27017/record',{useNewUrlParser:true})
-
 var users=new mongoose.Schema({
     name:{
         type:String,
@@ -18,13 +16,12 @@ var users=new mongoose.Schema({
         {
             if(!validator.isEmail(user))
             {
-                alert('invalid email syntax')
-                location.href='/signup'
+                throw new Error('invalid email')
             }
         }
     },
     phone:{
-        type:Number,
+        type:String,
         required:true,
         maxlength:10
     },
@@ -34,6 +31,10 @@ var users=new mongoose.Schema({
         maxlength:9
     },
     password:{
+        type:String,
+        required:true
+    },
+    backupass:{
         type:String,
         required:true
     }

@@ -1,6 +1,6 @@
 var mongoose=require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/ques',{useNewUrlParser:true})
+//mongoose.connect('mongodb://localhost:27017/ques',{useNewUrlParser:true})
 
 var data= new mongoose.Schema({
     name:{

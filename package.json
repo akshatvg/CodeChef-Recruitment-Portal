@@ -4,6 +4,8 @@
   "description": "CCS Portal for CodeChef VIT.",
   "main": "app.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "hbs": "^4.0.4",
