@@ -9,6 +9,7 @@
     "hbs": "^4.0.4",
     "mongodb": "^3.2.5",
     "mongoose": "^5.5.13",
+    "particlesjs": "^2.2.3",
     "path": "^0.12.7",
     "validator": "^11.0.0"
   },

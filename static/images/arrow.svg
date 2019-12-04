@@ -1,7 +1,0 @@
-<svg height="36" preserveAspectRatio="none" viewBox="0 0 36 36" width="36" xmlns="http://www.w3.org/2000/svg" zoomAndPan="disable">
-    <g stroke="#d0d0d0" stroke-width="2">
-        <path d="m0 18 18 18" />
-        <path d="m36 18-18 18" />
-        <path d="m18 36v-36" />
-    </g>
-</svg>
