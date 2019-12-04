@@ -32,7 +32,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(express.static("public"))
+app.use(express.static("static"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
