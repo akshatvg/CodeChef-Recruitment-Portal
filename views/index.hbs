@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -101,7 +101,7 @@
 					{{#each errors}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						{{this.text}}   
+						<p>{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields">
@@ -178,16 +178,16 @@
 			<article id="login">
 				<h2 class="major">Sign In</h2>
 				<form action="/userLogin" method="post" role="form">
-				{{#each errors}}
+					{{#each errors}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						{{this.text}}   
+						<p>{{this.text}}</p>
 					</div>
 					{{/each}}
 					{{#each success}}
 					<div class="alert alert-success">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						{{this.text}}
+						<p>{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields">
