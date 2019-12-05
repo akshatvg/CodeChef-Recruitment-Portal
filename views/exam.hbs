@@ -16,9 +16,15 @@
     <!-- No Script -->
     <noscript>
         <link rel="stylesheet" href="css/noscript.css" /></noscript>
+
+    <!-- Particle.js-->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
 </head>
 
 <body class="is-preload">
+
+    <div id="particles-js"></div>
 
     <!-- Wrapper -->
     <div id="wrapper">
@@ -27,6 +33,12 @@
         <header id="header">
             <img class="img-responsive logo" src="images/Logo.png" alt="Logo" />
             <div class="content">
+                {{#each errors}}
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>{{this.text}}</p>
+                </div>
+                {{/each}}
                 <div class="inner">
                     <h1>Choose Your Domain</h1>
                     <div class="fields">
@@ -70,11 +82,6 @@
                 </div>
             </div>
 
-            <a href='/index'>
-                <button class="primary">
-                    Go Back
-                </button>
-            </a>
             <a href="/logout">
                 <button class="reset">Logout
                 </button>
@@ -89,8 +96,10 @@
 
     </div>
 
+    </header>
+
     <!-- BG -->
-    <div id="bg"></div>
+    {{!-- <div id="bg"></div> --}}
 
     <!-- Scripts -->
     <script src="js/jquery.min.js"></script>

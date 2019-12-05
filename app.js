@@ -322,7 +322,7 @@ app.get('/logout', auth, function (req, res) {
             throw err;
         } else {
             console.log("Session is destroyed, You are redirected to the login page.");
-            res.render('signin', {
+            res.render('index', {
                 layout: false,
                 message: " "
             })

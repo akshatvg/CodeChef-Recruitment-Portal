@@ -25,6 +25,11 @@
 		}, 100);
 	});
 
+	// Particles.js
+	particlesJS.load('particles-js', 'js/particlesjs-config.json', function () {
+		console.log('Particles.js working!');
+	});
+
 	// Fix: Flexbox min-height bug on IE.
 	if (browser.name == 'ie') {
 

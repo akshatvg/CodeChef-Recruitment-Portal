@@ -15,10 +15,17 @@
 
 	<!-- No Script -->
 	<noscript>
-		<link rel="stylesheet" href="css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="css/noscript.css" />
+	</noscript>
+
+	<!-- Particle.js-->
+	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
 </head>
 
 <body class="is-preload">
+
+	<div id="particles-js"></div>
 
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -119,7 +126,8 @@
 						</div>
 						<div class="field half">
 							<label for="regno">Registration Number</label>
-							<input type="text" name="regno" id="regno" required />
+							<input type="text" name="regno" id="regno" onkeyup="this.value=this.value.toUpperCase();"
+								required />
 						</div>
 						<div class="field half">
 							<label for="phoneno">Phone Number</label>
@@ -141,6 +149,12 @@
 			<!-- Contact -->
 			<article id="contact">
 				<h2 class="major">Contact Us</h2>
+				{{#if msgsent}}
+				<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p>{{msgsent}}</p>
+				</div>
+				{{/if}}
 				<form action="/contact" method="post" role="form">
 					<div class="fields">
 						<div class="field half">
