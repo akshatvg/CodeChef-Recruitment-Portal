@@ -33,10 +33,6 @@ var users=new mongoose.Schema({
     password:{
         type:String,
         required:true
-    },
-    backupass:{
-        type:String,
-        required:true
     }
 })
 

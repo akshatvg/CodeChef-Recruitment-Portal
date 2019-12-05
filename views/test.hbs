@@ -12,6 +12,7 @@
     <!-- Linking CSS -->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/gif" href="images/favicon.jpg" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- No Script -->
     <noscript>
@@ -29,7 +30,7 @@
             <img class="img-responsive logo" src="images/Logo.png" alt="Logo" />
             <div class="content">
                 <div class="inner">
-                    <h1><span>{{dom}} Domain: {{title}}</h1>
+                    <h1><span class="dom">{{dom}}</span> Domain: <span class="dom-title">{{title}}</span> </h1>
                     <div>
                         <h3 id="demo" style="color: red;float: right;">
                         </h3>
@@ -56,11 +57,11 @@
                 </div>
             </div>
 
-            <a href='/exam'>
+            
                 <button class="primary btnSubmit">
                     Finish Test
                 </button>
-            </a>
+            <p hidden class="hid">{{name}}</p>
 
         </header>
 
@@ -75,6 +76,7 @@
     <div id="bg"></div>
 
     <!-- Scripts -->
+    <script src="js/client.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/browser.min.js"></script>
     <script src="js/breakpoints.min.js"></script>
@@ -86,7 +88,7 @@
         console.log('conected')
         // Set the date being counting down to
         var oldDateObj = new Date().getTime();
-        var countDownDate = moment(oldDateObj).add(20, 'm').toDate();
+        var countDownDate = moment(oldDateObj).add(10, 'm').toDate();
 
         // count down updated every 1 second
         var x = setInterval(function () {

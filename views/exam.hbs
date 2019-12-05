@@ -27,7 +27,14 @@
         <header id="header">
             <img class="img-responsive logo" src="images/Logo.png" alt="Logo" />
             <div class="content">
+                {{#each errors}}
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{this.text}}   
+                </div>
+                {{/each}}
                 <div class="inner">
+                    
                     <h1>Choose Your Domain</h1>
                     <div class="fields">
                         <div class="field ">
