@@ -28,9 +28,15 @@ var users = new mongoose.Schema({
         required: true,
         maxlength: 9
     },
+<<<<<<< HEAD
     password: {
         type: String,
         required: true
+=======
+    password:{
+        type:String,
+        required:true
+>>>>>>> f0bb97afab077e13339abc821e3a6606791c56db
     }
 })
 
