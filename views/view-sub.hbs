@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>View Submissions</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Admin panel to view submissions." name="description">
+
+    <!-- Favicons -->
+    <link href="../static/img/favicon.png" rel="icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/nivo-slider/css/nivo-slider.css" rel="stylesheet">
+    <link href="lib/owlcarousel/owl.carousel.css" rel="stylesheet">
+    <link href="lib/owlcarousel/owl.transitions.css" rel="stylesheet">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+
+    <!-- Slider Theme -->
+    <link href="css/nivo-slider-theme.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Responsive Stylesheet File -->
+    <link href="css/responsive.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        #table1,
+        #table2,
+        #table3,
+        #table4 {
+            display: none;
+        }
+    </style>
+
+</head>
+
+
+<body data-spy="scroll" data-target="#navbar-example"
+    style="background: linear-gradient(to right, #3932AF, #1986DD, #00C5FE);">
+
+    <div id="preloader"></div>
+
+    <header>
+        <!-- header-area start -->
+        <div id="sticker" class="header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <!-- Navigation -->
+                        <nav class="navbar navbar-default">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target=".bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <!-- Brand -->
+                                <a class="navbar-brand page-scroll sticky-logo" href="/admin">
+                                    <h1><span>CET: Admin Panel</span></h1>
+                                </a>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1"
+                                id="navbar-example">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a class="page-scroll" href="/admin">Home</a>
+                                    </li>
+                                    <li>
+                                        <a class="page-scroll" href="/addQues">Add Questions</a>
+                                    </li>
+                                    <li class="active">
+                                        <a class="page-scroll" href="/viewSub">View Submissions</a>
+                                    </li>
+                                    <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                            data-toggle="dropdown">{{msg}}<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/adminlogout">Log Out</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- navbar-collapse -->
+                        </nav>
+                        <!-- END: Navigation -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header-area end -->
+    </header>
+    <!-- header end -->
+
+    <!-- Start choice area -->
+    <div id="choice" class="services-area area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="section-headline services-head text-center" style="margin-bottom: 0;margin-top: 10px;">
+                        <h2>Let's find out if they have what it takes!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End choice area -->
+
+    <body>
+
+        <div class="container">
+            <form>
+
+                <div class="form-group">
+                    <label style="color: black;" required>Choose a domain</label>
+                    <select class="form-control selectpick" id="first-choice">
+                        <option value="base" selected disabled hidden>Click To Choose</option>
+                        <option value="Technical">Technical Domain</option>
+                        <option value="Management">Management Domain</option>
+                        <option value="Design">Design Domain</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="color: black;">Choose your technical domain</label>
+                    <select class="form-control selectpick2" id="second-choice">
+                        <option value="" selected disabled hidden>Click To Choose</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="App Development">App Development</option>
+                        <option value="Competitive Coding">Competitive Coding</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="Augmented & Virtual Reality">Augmented & Virtual Reality</option>
+                        <option value="Machine Learning & Artificial Intelligence">Machine Learning & Artificial Intelligence</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="color: black;">Choose your management domain</label>
+                    <select class="form-control selectpick2" id="third-choice">
+                        <option value="" selected disabled hidden>Click To Choose</option>
+                        <option value="Operations">Operations Domain</option>
+                        <option value="Sponsorship">Sponsorship Domain</option>
+                        <option value="Content Writing">Content Writing Domain</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="color: black;">Choose your design domain</label>
+                    <select class="form-control selectpick2" id="third-choice">
+                        <option value="" selected disabled hidden>Click To Choose</option>
+                        <option value="Design">Main Design Domain</option>
+                    </select>
+                </div>
+                <br>
+                <input type="button" class="btn btn-primary btnSubmit" value="View Submissions" align="right" />
+                {{!-- <button class="btn btn-primary btnSubmit" align="right"><a href="/"></a> View Submissions</button> --}}
+            </form>
+        </div>
+
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="js/viewSub.js"></script>
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/venobox/venobox.min.js"></script>
+        <script src="lib/knob/jquery.knob.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/parallax/parallax.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/nivo-slider/js/jquery.nivo.slider.js" type="text/javascript"></script>
+        <script src="lib/appear/jquery.appear.js"></script>
+        <script src="lib/isotope/isotope.pkgd.min.js"></script>
+
+
+        <!-- Contact Form JavaScript File -->
+        <script src="contactform/contactform.js"></script>
+
+        <script src="js/main.js"></script>
+
+        <script type="text/javascript">
+            function showHideDiv(ele) {
+                var srcElement = document.getElementById(ele);
+                if (srcElement != null) {
+                    if (srcElement.style.display == "block") {
+                        srcElement.style.display = 'none';
+                    }
+                    else {
+                        srcElement.style.display = 'block';
+                    }
+                    return false;
+                }
+            }
+        </script>
+
+    </body>
+
+</html>

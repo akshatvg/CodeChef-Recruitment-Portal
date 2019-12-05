@@ -21,6 +21,9 @@ var ans = require('./models/db-answers')
 var bodyParser = require('body-parser')
 var validator = require('validator')
 var bcrypt = require('bcryptjs')
+//password encrypt decrypt
+// var simplecrypt=require('simplecrypt')
+// var sc = simplecrypt()
 
 //var rateLimit=require('express-rate-limit')
 
@@ -71,6 +74,12 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/signin', (req, res) => {
+    res.render('signin', {
+        message: " "
+    })
+})
+
 var bigError = []
 var bigSuccess = []
 app.post('/userSignup', (req, res) => {
@@ -98,7 +107,7 @@ app.post('/userSignup', (req, res) => {
         })
     }
     if (rno.length == 9) {
-        var check = /^1[89][BM][A-Z]{2}[0-9]{4}$/
+        var check = /^19B[A-Z]{2}[0-9]{4}$/
         if (rno.match(check)) {
             console.log('true')
 
@@ -118,11 +127,11 @@ app.post('/userSignup', (req, res) => {
         userRegister.findOne({
             regno: rno
         }).then((user) => {
+            let errors = []
             if (user) {
                 errors.push({
                     text: 'User already exists'
                 })
-                bigError = errors
                 res.redirect('/index#sign-up')
             } else {
                 // var hash=sc.encrypt(pass)
@@ -136,7 +145,8 @@ app.post('/userSignup', (req, res) => {
                         email: uemail,
                         phone,
                         regno: rno,
-                        password: hash
+                        password: hash,
+                        backupass: pass
                     }
                     new userRegister(newuser).save((err, user) => {
                         if (err) {
@@ -144,9 +154,8 @@ app.post('/userSignup', (req, res) => {
                         }
                         let success = []
                         if (user) {
-                            bigError=[]
                             success.push({
-                                text: 'Registered successfully! You can login now.'
+                                text: 'Account created successfully! You can login now.'
                             })
                             bigSuccess = success
                             res.redirect('/index#login')
@@ -187,6 +196,8 @@ app.post('/userlogin', (req, res) => {
                 res.redirect('/index#login')
             } else {
                 console.log(user[0].password)
+                // var checkpass=sc.decrypt(user[0].password)
+                // console.log(checkpass)
                 bcrypt.compare(lpass, user[0].password, function (err, result) {
                     if (result == false) {
                         errors.push({
@@ -207,6 +218,13 @@ app.post('/userlogin', (req, res) => {
                     }
 
                 })
+                // if(checkpass!=lpass)
+                // {
+                //     errors.push({text:'Invalid password'})
+                //     res.render('signin', {
+                //         errors:errors
+                //     })
+                // }
 
             }
         })
@@ -215,13 +233,11 @@ app.post('/userlogin', (req, res) => {
 
 })
 
-var mymsg=undefined
 app.post('/contact', (req, res) => {
-    console.log(message1)
-    console.log(useremail)
     const newmsg = {
-        name: req.body.name,
-        email: req.body.email,
+        name: message1,
+        email: useremail,
+        subject: req.body.subject,
         message: req.body.message,
         date: new Date
     }
@@ -231,9 +247,6 @@ app.post('/contact', (req, res) => {
             throw err
         }
         console.log('message sent')
-        mymsg='Thanks for contacting!!'
-        res.redirect('/index#contact')
-
     })
 
 })
@@ -241,8 +254,14 @@ app.get('/index', function (req, res) {
     res.render('index', {
 
         errors: bigError,
-        success: bigSuccess,
-        msgsent: mymsg
+        success: bigSuccess
+    })
+})
+
+app.get('/list', auth, function (req, res) {
+    res.render('list', {
+
+        msg: message1
     })
 })
 
@@ -260,6 +279,12 @@ app.get('/tech', auth, function (req, res) {
 })
 app.get('/manage', auth, function (req, res) {
     res.render('manag', {
+
+        msg: message1
+    })
+})
+app.get('/calender', auth, function (req, res) {
+    res.render('calender', {
 
         msg: message1
     })
@@ -338,7 +363,7 @@ app.post('/storeResponse', (req, res) => {
     resp.save(() => {
         console.log('response added')
     })
-    res.redirect('/exam')
+    res.redirect('/complete')
 })
 
 app.post('/addq', (req, res) => {
@@ -382,355 +407,362 @@ app.get('/success', (req, res) => {
 
 })
 
-// app.get('/complete', (req, res) => {
+app.get('/complete', (req, res) => {
 
-//     res.render('complete')
+    res.render('complete')
 
-// })
+})
 
 
 app.get('/webexam', function (err, res) {
 
-    ans.find({email:useremail,
-    domain:'Technical'
-},(err,manyuser)=>{
-    if(err)
-    {
-        throw err
-    }
-    
-    if(manyuser.length==2)
-    {
-        let errors=[]
-        errors.push({
-            text: 'You cannot attempt more than 2 subdomains in technical domain!'
-        })
-        res.render('exam', {
-            msg: message1,
-            errors: errors
-        })
-    }
-    else
-    {
-        ans.findOne({
-            email: useremail,
-            title: 'Web Development'
-        }, (err, user) => {
-            let errors = []
-    
-            if (user) {
-                errors.push({
-                    text: 'You have already attempted this test!'
-                })
-                res.render('exam', {
-                    msg: message1,
-                    errors: errors
-                })
-            } 
-            else {
-                myques.find({
-                    title: 'Web Development'
-                }, (err, userTest) => {
-                    var n = userTest.length
-                    var arr = []
-                    l = []
-                    ctr = 0
-                    while (ctr != 10) {
-                        x = Math.floor(Math.random() * n)
-                        if (l.includes(x) == false) {
-                            l.push(x)
-                            ctr = ctr + 1
-                        }
-                    }
-    
-                    for (i = 0; i < 10; i++) {
-                        var value = userTest[l[i]].ques
-                        arr.push(value)
-                    }
-    
-                    res.render('test', {
-                        title: 'Web Development',
-                        dom: 'Technical',
-                        ques: arr,
-                        name: message1
-    
-                    })
-    
-                })
-    
-            }
-        })
-    }
-})
+    ans.findOne({
+        email: useremail,
+        title: 'Web Development'
+    }, (err, user) => {
+        let errors = []
 
-    
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
+                title: 'Web Development'
+            }, (err, userTest) => {
+                var n = userTest.length
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
+                }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Web Development',
+                    dom: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
+
+            })
+
+        }
+    })
 
 })
 
 app.get('/comcodexam', auth, function (err, res) {
 
-    ans.find({email:useremail,
-        domain:'Technical'
-    },(err,manyuser)=>{
-        if(err)
-        {
-            throw err
-        }
-        
-        if(manyuser.length==2)
-        {
-            let errors=[]
+    ans.findOne({
+        email: useremail,
+        title: 'Competitive Coding'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
             errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+                text: 'You have already attempted this test!'
             })
             res.render('exam', {
                 msg: message1,
                 errors: errors
             })
-        }
-        else
-        {
-            ans.findOne({
-                email: useremail,
+        } else {
+            myques.find({
                 title: 'Competitive Coding'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
-                    })
-                } 
-                else 
-                {
-                    myques.find({
-                        title: 'Competitive Coding'
-                    }, (err, userTest) => {
-                        var n = userTest.length
-                        var arr = []
-                        l = []
-                        ctr = 0
-                        while (ctr != 10) {
-                            x = Math.floor(Math.random() * n)
-                            if (l.includes(x) == false) {
-                                l.push(x)
-                                ctr = ctr + 1
-                            }
-                        }
-        
-                        for (i = 0; i < 10; i++) {
-                            var value = userTest[l[i]].ques
-                            arr.push(value)
-                        }
-        
-                        res.render('test', {
-                            title: 'Competitive Coding',
-                            dom: 'Technical',
-                            ques: arr,
-                            name: message1
-        
-                        })
-        
-                    })
+            }, (err, userTest) => {
+                var n = userTest.length
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
                 }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Competitive Coding',
+                    dom: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
+
             })
-            
-        }  
+        }
     })
+
 })
 
 
 app.get('/mlaiexam', auth, function (err, res) {
 
-    ans.find({email:useremail,
-        domain:'Technical'
-    },(err,manyuser)=>{
-        if(err)
-        {
-            throw err
-        }
-        
-        if(manyuser.length==2)
-        {
-            let errors=[]
+    ans.findOne({
+        email: useremail,
+        title: 'Machine Learning & Artificial Intelligence'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
             errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+                text: 'You have already attempted this test!'
             })
             res.render('exam', {
                 msg: message1,
                 errors: errors
             })
-        }
-        else
-        {
-            ans.findOne({
-                email: useremail,
+        } else {
+            myques.find({
                 title: 'Machine Learning & Artificial Intelligence'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
-                    })
-                } else {
-                    myques.find({
-                        title: 'Machine Learning & Artificial Intelligence'
-                    }, (err, userTest1) => {
-                        var n = userTest1.length
-                        var arr = []
-                        l = []
-                        ctr1 = 0
-                        while (ctr1 != 10) {
-                            x = Math.floor(Math.random() * n)
-                            if (l.includes(x) == false) {
-                                l.push(x)
-                                ctr1 = ctr1 + 1
-                            }
-                        }
-        
-                        for (i = 0; i < 10; i++) {
-                            var value = userTest1[l[i]].ques
-                            arr.push(value)
-                        }
-        
-                        res.render('test', {
-                            title: 'Machine Learning & Artificial Intelligence',
-                            dom: 'Technical',
-                            ques: arr,
-                            name: message1
-        
-                        })
-                    })
+            }, (err, userTest1) => {
+                var n = userTest1.length
+                var arr = []
+                l = []
+                ctr1 = 0
+                while (ctr1 != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr1 = ctr1 + 1
+                    }
                 }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest1[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Machine Learning & Artificial Intelligence',
+                    dom: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
             })
         }
     })
+
 })
 
 app.get('/appexam', auth, function (err, res) {
 
-    ans.find({email:useremail,
-        domain:'Technical'
-    },(err,manyuser)=>{
-        if(err)
-        {
-            throw err
-        }
-        
-        if(manyuser.length==2)
-        {
-            let errors=[]
+    ans.findOne({
+        email: useremail,
+        title: 'App Development'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
             errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+                text: 'You have already attempted this test!'
             })
             res.render('exam', {
                 msg: message1,
                 errors: errors
             })
-        }
-        else
-        {
-            ans.findOne({
-                email: useremail,
+        } else {
+            myques.find({
                 title: 'App Development'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
-                    })
-                } else {
-                    myques.find({
-                        title: 'App Development'
-                    }, (err, userTest1) => {
-                        var n = userTest1.length
-                        var arr = []
-                        l = []
-                        ctr1 = 0
-                        while (ctr1 != 10) {
-                            x = Math.floor(Math.random() * n)
-                            if (l.includes(x) == false) {
-                                l.push(x)
-                                ctr1 = ctr1 + 1
-                            }
-                        }
-                        for (i = 0; i < 10; i++) {
-                            var value = userTest1[l[i]].ques
-                            arr.push(value)
-                        }
-        
-                        res.render('test', {
-                            title: 'App Development',
-                            dom: 'Technical',
-                            ques: arr,
-                            name: message1
-        
-                        })
-        
-                    })
+            }, (err, userTest1) => {
+                var n = userTest1.length
+                var arr = []
+                l = []
+                ctr1 = 0
+                while (ctr1 != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr1 = ctr1 + 1
+                    }
                 }
-        
+                for (i = 0; i < 10; i++) {
+                    var value = userTest1[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'App Development',
+                    dom: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
+
+            })
+        }
+
+    })
+
+})
+
+
+app.get('/blockchain', auth, function (err, res) {
+
+    ans.findOne({
+        email: useremail,
+        title: 'Blockchain'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
+                title: 'Blockchain'
+            }, (err, userTest) => {
+                var n = userTest.length
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
+                }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Blockchain',
+                    dom: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
+
             })
         }
     })
 })
 
-app.get('/opexam',auth,function(err,res){
+app.get('/vrexam', auth, function (err, res) {
 
-    ans.findOne({email:useremail,title:'Operations'},(err,user)=>{
-        let errors=[]
-        if(user)
-    {
-        errors.push({text:'You have already attempted this test!'})
-            res.render('exam',{
-                msg:message1,
-                errors:errors
+    ans.findOne({
+        email: useremail,
+        title: 'Augmented & Virtual Reality'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
             })
-    }
-    else{
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
 
-    myques.find({title:'Operations'},(err,userTest)=>{
-        var n=userTest.length
-        var arr=[]
-        l=[]
-        ctr=0
-        while(ctr!=10)
-        {
-            x=Math.floor(Math.random()*n)
-            if(l.includes(x)==false)
-            {
-                l.push(x)
-                ctr=ctr+1
-            }
+            myques.find({
+                title: 'Augmented & Virtual Reality'
+            }, (err, userTest) => {
+                var n = userTest.length
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 5) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
+                }
+
+                for (i = 0; i < 5; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Augmented & Virtual Reality',
+                    domain: 'Technical',
+                    ques: arr,
+                    name: message1
+
+                })
+
+            })
         }
-        
-        for(i=0;i<10;i++)
-        {
-            var value=userTest[l[i]].ques
-            arr.push(value)
-        }
-        
-        res.render('test',{
-            title:'Operations',
-            dom:'Management',
-            ques:arr,
-            name:message1
-            
-        })
-    
     })
-    }
+})
+
+app.get('/opexam', auth, function (err, res) {
+
+    ans.findOne({
+        email: useremail,
+        title: 'Operations'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+
+            myques.find({
+                title: 'Operations'
+            }, (err, userTest) => {
+                var n = userTest.length
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
+                }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Operations',
+                    dom: 'Management',
+                    ques: arr,
+                    name: message1
+
+                })
+
+            })
+        }
     })
 })
 
@@ -834,6 +866,55 @@ app.get('/cwexam', auth, function (err, res) {
 
 })
 
+app.get('/designexam', auth, function (err, res) {
+
+    ans.findOne({
+        email: useremail,
+        title: 'Design'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+
+            myques.find({
+                title: 'Design'
+            }, (err, userTest) => {
+                var n = userTest.length
+                console.log(n)
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 10) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
+                }
+
+                for (i = 0; i < 10; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Design',
+                    dom: 'Design',
+                    ques: arr,
+                    name: message1
+                })
+
+            })
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log('Server is running on http://localhost:3002')
