@@ -21,9 +21,14 @@
 	<!-- Particle.js-->
 	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+	<!-- reCaptcha -->
+	<script src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
+
 </head>
 
-<body class="is-preload">
+<body>
+
+	<div id="preloader"></div>
 
 	<div id="particles-js"></div>
 
@@ -32,10 +37,10 @@
 
 		<!-- Header -->
 		<header id="header">
-			<img class="img-responsive logo" src="images/Logo.png" alt="Logo" />
+			<img class="img-responsive logo" src="images/Logo_White.png" alt="Logo" />
 			<div class="content">
 				<div class="inner">
-					<img src="images/CCS.png" class="img-responsive logo2" alt="CCS" />
+					<img src="images/CCS_White.png" class="img-responsive logo2" alt="CCS" />
 					<p>Welcome to the official recruitment portal for CodeChef- VIT.</p>
 				</div>
 			</div>
@@ -108,7 +113,7 @@
 					{{#each errors}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p>{{this.text}}</p>
+						<p style="color: red;">{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields">
@@ -140,7 +145,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Sign Up" class="primary" /></li>
-						<li><input type="reset" value="Reset" class="reset" /></li>
+						<li><input type="reset" value="Reset" class="primary" /></li>
 					</ul>
 				</form>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
@@ -172,7 +177,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Send Message" class="primary" /></li>
-						<li><input type="reset" value="Reset" class="reset" /></li>
+						<li><input type="reset" value="Reset" class="primary" /></li>
 					</ul>
 				</form>
 				<ul class="icons">
@@ -195,13 +200,13 @@
 					{{#each errors}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p>{{this.text}}</p>
+						<p style="color: red;">{{this.text}}</p>
 					</div>
 					{{/each}}
 					{{#each success}}
 					<div class="alert alert-success">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p>{{this.text}}</p>
+						<p style="color: rgb(83, 243, 83);">{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields">
@@ -217,7 +222,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Sign In" class="primary" /></li>
-						<li><input type="reset" value="Reset" class="reset" /></li>
+						<li><input type="reset" value="Reset" class="primary" /></li>
 					</ul>
 				</form>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />

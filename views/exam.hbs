@@ -20,9 +20,14 @@
     <!-- Particle.js-->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+    <!-- reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
+
 </head>
 
-<body class="is-preload">
+<body>
+
+    <div id="preloader"></div>
 
     <div id="particles-js"></div>
 
@@ -31,12 +36,12 @@
 
         <!-- Header -->
         <header id="header">
-            <img class="img-responsive logo" src="images/Logo.png" alt="Logo" />
+            <img class="img-responsive logo" src="images/Logo_White.png" alt="Logo" />
             <div class="content">
                 {{#each errors}}
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p>{{this.text}}</p>
+                    <p style="color: red;">{{this.text}}</p>
                 </div>
                 {{/each}}
                 <div class="inner">
@@ -83,7 +88,7 @@
             </div>
 
             <a href="/logout">
-                <button class="reset">Logout
+                <button class="primary">Logout
                 </button>
             </a>
 
@@ -99,7 +104,7 @@
     </header>
 
     <!-- BG -->
-    {{!-- <div id="bg"></div> --}}
+    <div id="bg"></div>
 
     <!-- Scripts -->
     <script src="js/jquery.min.js"></script>

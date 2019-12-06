@@ -19,16 +19,27 @@
 	});
 
 	// Play initial animations on page load.
-	$window.on('load', function () {
-		window.setTimeout(function () {
-			$body.removeClass('is-preload');
-		}, 100);
+	$(function () { 
+		setTimeout(function () {
+			$('#preloader').fadeOut('slow', function () {
+				$(this).remove();
+			});
+		}, 2400);
 	});
 
 	// Particles.js
 	particlesJS.load('particles-js', 'js/particlesjs-config.json', function () {
 		console.log('Particles.js working!');
 	});
+
+	//reCaptcha
+
+	grecaptcha.ready(function () {
+		grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
+			action: 'homepage'
+		});
+	});
+
 
 	// Fix: Flexbox min-height bug on IE.
 	if (browser.name == 'ie') {
