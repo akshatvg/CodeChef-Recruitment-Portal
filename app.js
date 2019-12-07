@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 var path = require('path')
 var session = require('express-session')
-
+const request=require('request')
 //db connection
 require('dotenv').config()
 var db = require('./config/keys')
@@ -58,6 +58,25 @@ var auth = function (req, res, next) {
         return res.sendStatus(401);
 };
 
+var verifyCaptcha = (req, res, next) => {
+    var bodydata=JSON.parse(req.body.display)
+    if (!bodydata['recaptcha']) {
+      return res.json({status: false});
+    }
+    console.log('wwwwwww')
+    const token = bodydata['recaptcha'] || req.query['recaptcha'];
+    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTSECRET}&response=${token}&remoteip=${req.connection.remoteAddress}`;
+  
+    request(verificationUrl, (error, response, body)=> {
+      body = JSON.parse(body);
+      if (body.success !== undefined && !body.success) {
+        return res.json({status: false});
+      }
+      req.session.captcha = true;
+      next();
+    });
+  };
+
 //defining global variables
 var userSession
 var Name
@@ -71,16 +90,17 @@ app.get('/', (req, res) => {
     })
 })
 
-var bigError = []
+var bigError1 = []
+var bigError2 = []
 var bigSuccess = []
-app.post('/userSignup', (req, res) => {
+app.post('/userSignup',(req, res) => {
     var uname1 = req.body.first_name;
     var uname2 = req.body.last_name;
     var uemail = req.body.email;
     var phone = req.body.phoneno;
     var rno = req.body.regno;
     var pass = req.body.password;
-
+    bigError1 = []
     let errors = []
     if (phone.length != 10) {
         errors.push({
@@ -111,7 +131,7 @@ app.post('/userSignup', (req, res) => {
     }
 
     if (errors.length > 0) {
-        bigError = errors
+        bigError1= errors
         res.redirect('/index#sign-up')
     } else {
         userRegister.findOne({
@@ -121,10 +141,9 @@ app.post('/userSignup', (req, res) => {
                 errors.push({
                     text: 'User already exists'
                 })
-                bigError = errors
+                bigError1 = errors
                 res.redirect('/index#sign-up')
             } else {
-                // var hash=sc.encrypt(pass)
                 bcrypt.hash(pass, 10, function (err, hash) {
                     console.log(hash)
                     if (err) {
@@ -143,7 +162,7 @@ app.post('/userSignup', (req, res) => {
                         }
                         let success = []
                         if (user) {
-                            bigError = []
+                            bigError1 = []
                             success.push({
                                 text: 'Registered successfully! You can sign in now.'
                             })
@@ -160,11 +179,15 @@ app.post('/userSignup', (req, res) => {
 })
 
 
-app.post('/userlogin', (req, res) => {
+app.post('/userlogin',verifyCaptcha, (req, res) => {
 
     userSession = req.session
-    var lname = req.body.email;
-    var lpass = req.body.password;
+    var bodydata=JSON.parse(req.body.display)
+    var lname = bodydata.email;
+    var lpass = bodydata.password;
+    console.log(lname)
+    console.log(lpass)
+    bigError2 = []
     if (lname == 'admin' && lpass == 'admin') {
         res.render('admin', {
             msg: 'Admin'
@@ -182,7 +205,7 @@ app.post('/userlogin', (req, res) => {
                 errors.push({
                     text: 'Invalid email'
                 })
-                bigError = errors
+                bigError2 = errors
                 res.redirect('/index#login')
             } else {
                 console.log(user[0].password)
@@ -191,7 +214,7 @@ app.post('/userlogin', (req, res) => {
                         errors.push({
                             text: 'Invalid password'
                         })
-                        bigError = errors
+                        bigError2 = errors
                         res.redirect('/index#login')
                     } else {
                         Name = user[0].name
@@ -199,10 +222,7 @@ app.post('/userlogin', (req, res) => {
                         useremail = user[0].email
                         console.log("message1: " + message1)
                         req.session.userName = Name
-                        res.render('exam', {
-
-                            msg: message1
-                        })
+                        res.redirect('/exam')
                     }
 
                 })
@@ -239,7 +259,8 @@ app.post('/contact', (req, res) => {
 app.get('/index', function (req, res) {
     res.render('index', {
 
-        errors: bigError,
+        errors1: bigError1,
+        errors2:bigError2,
         success: bigSuccess,
         msgsent: mymsg
     })
@@ -694,7 +715,7 @@ app.get('/opexam', auth, function (err, res) {
                 var arr = []
                 l = []
                 ctr = 0
-                while (ctr != 10) {
+                while (ctr != 5) {
                     x = Math.floor(Math.random() * n)
                     if (l.includes(x) == false) {
                         l.push(x)
@@ -702,7 +723,7 @@ app.get('/opexam', auth, function (err, res) {
                     }
                 }
 
-                for (i = 0; i < 10; i++) {
+                for (i = 0; i < 5; i++) {
                     var value = userTest[l[i]].ques
                     arr.push(value)
                 }
@@ -744,7 +765,7 @@ app.get('/sponsexam', auth, function (err, res) {
                 var arr = []
                 l = []
                 ctr = 0
-                while (ctr != 3) {
+                while (ctr != 5) {
                     x = Math.floor(Math.random() * n)
                     if (l.includes(x) == false) {
                         l.push(x)
@@ -752,7 +773,7 @@ app.get('/sponsexam', auth, function (err, res) {
                     }
                 }
 
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < 5; i++) {
                     var value = userTest[l[i]].ques
                     arr.push(value)
                 }
@@ -793,7 +814,7 @@ app.get('/cwexam', auth, function (err, res) {
                 var arr = []
                 l = []
                 ctr = 0
-                while (ctr != 2) {
+                while (ctr != 5) {
                     x = Math.floor(Math.random() * n)
                     if (l.includes(x) == false) {
                         l.push(x)
@@ -801,7 +822,7 @@ app.get('/cwexam', auth, function (err, res) {
                     }
                 }
 
-                for (i = 0; i < 2; i++) {
+                for (i = 0; i < 5; i++) {
                     var value = userTest[l[i]].ques
                     arr.push(value)
                 }
@@ -818,6 +839,54 @@ app.get('/cwexam', auth, function (err, res) {
         }
     })
 
+})
+
+app.get('/designexam',auth,function(err,res){
+
+    ans.findOne({email:useremail,title:'Design'},(err,user)=>{
+        let errors=[]
+        if(user)
+    {
+        errors.push({text:'You have already attempted this test!'})
+            res.render('exam',{
+                msg:message1,
+                errors:errors
+            })
+    }
+    else{
+
+        myques.find({title:'Design'},(err,userTest)=>{
+            var n=userTest.length
+            console.log(n)
+            var arr=[]
+            l=[]
+            ctr=0
+            while(ctr!=5)
+            {
+                x=Math.floor(Math.random()*n)
+                if(l.includes(x)==false)
+                {
+                    l.push(x)
+                    ctr=ctr+1
+                }
+            }
+            
+            for(i=0;i<5;i++)
+            {
+                var value=userTest[l[i]].ques
+                arr.push(value)
+            }
+            
+            res.render('test',{
+                title:'Design',
+                dom:'Design',
+                ques:arr,
+                name:message1
+            })
+        
+        })
+    }
+    })
 })
 
 

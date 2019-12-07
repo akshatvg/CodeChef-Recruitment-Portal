@@ -110,7 +110,7 @@
 			<article id="sign-up">
 				<h2 class="major">Sign Up</h2>
 				<form action="/userSignup" method="POST" role="form">
-					{{#each errors}}
+					{{#each errors1}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						<p style="color: red;">{{this.text}}</p>
@@ -196,8 +196,8 @@
 			<!-- Login Page -->
 			<article id="login">
 				<h2 class="major">Sign In</h2>
-				<form action="/userLogin" method="post" role="form">
-					{{#each errors}}
+				<form role="form">
+					{{#each errors2}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						<p style="color: red;">{{this.text}}</p>
@@ -213,15 +213,15 @@
 
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" required />
+							<input type="text" name="email" id="lemail" required />
 						</div>
 						<div class="field half">
 							<label for="password">Password</label>
-							<input type="password" name="password" id="password" required />
+							<input type="password" name="password" id="lpassword" required />
 						</div>
 					</div>
 					<ul class="actions">
-						<li><input type="submit" value="Sign In" class="primary" /></li>
+						<li><input type="submit" value="Sign In" class="primary btnLogin" /></li>
 						<li><input type="reset" value="Reset" class="primary" /></li>
 					</ul>
 				</form>
@@ -246,7 +246,43 @@
 	<script src="js/breakpoints.min.js"></script>
 	<script src="js/util.js"></script>
 	<script src="js/main.js"></script>
+	<script>
 
+		grecaptcha.ready(() => {
+                grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
+                    action: '/userLogin'
+                }).then(async (token) => {
+					var btnLogin = document.querySelector('.btnLogin')
+					var emailsend = document.querySelector('#lemail')
+					var passend = document.querySelector('#lpassword')
+
+					$('.btnLogin').on('click', () =>{
+						var data = {
+						email: emailsend.value,
+						password: passend.value,
+						recaptcha: token
+					}
+					console.log(data)
+					$.ajax({
+						url: '/UserLogin',
+						type: "POST",
+						data: {
+							display: JSON.stringify(data)
+						},
+						success: function (data) {
+							console.log('success')
+							window.location.href = '/exam'
+						},
+						error: function (err) {
+							console.log('error')
+						}
+
+					})
+						})
+
+				})
+		})
+	</script>
 </body>
 
-</html>
+</html>																											
