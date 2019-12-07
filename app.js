@@ -76,9 +76,7 @@ var verifyCaptcha = (req, res, next) => {
                 status: false
             });
         }
-        return res.json({
-            status: true
-        });
+        req.session.captcha = true;
         next();
     });
 };
@@ -185,13 +183,13 @@ app.post('/userSignup', (req, res) => {
 })
 
 
-app.post('/userlogin', (req, res) => {
+app.post('/userlogin', verifyCaptcha, (req, res) => {
 
     userSession = req.session
-    //var bodydata=JSON.parse(req.body.display)
+    var bodydata = JSON.parse(req.body.display)
     // console.log(bodydata)
-    var lname = req.body.email;
-    var lpass = req.body.password;
+    var lname = bodydata.email;
+    var lpass = bodydata.password;
     // console.log(lname)
     // console.log(lpass)
     bigError2 = []

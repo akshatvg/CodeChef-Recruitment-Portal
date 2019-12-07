@@ -194,7 +194,7 @@
 			<!-- Login Page -->
 			<article id="login">
 				<h2 class="major">Sign In</h2>
-				<form role="form" method="POST" id="formSubmit" action="/userLogin">
+				<form id="formSubmit" action="/userLogin" method="POST">
 					{{#each errors2}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -247,14 +247,14 @@
 	<script src="js/breakpoints.min.js"></script>
 	<script src="js/util.js"></script>
 	<script src="js/main.js"></script>
-	{{!-- <script>
+	<script>
 
 		document.getElementById('formSubmit').addEventListener('submit', (e) => {
 			e.preventDefault()
 			grecaptcha.ready(() => {
 				grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
 					action: '/userLogin'
-				}).then(async (token) => {
+				}).then((token) => {
 
 					var emailsend = document.querySelector('#lemail')
 					var passend = document.querySelector('#lpassword')
@@ -290,6 +290,7 @@
 							},
 							success: function (data) {
 								console.log('success')
+								window.location.href = '/exam'
 							},
 							error: function (err) {
 								console.log('error')
@@ -303,7 +304,7 @@
 			})
 		})
 
-	</script> --}}
+	</script>
 </body>
 
 </html>
