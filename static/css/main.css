@@ -690,6 +690,19 @@ input[type="radio"]+label:before {
 	opacity: 1.0;
 }
 
+.mainpg label {
+	color: black;
+}
+
+.mainpg input {
+	box-shadow: 0 0 0 1px black;
+	border-color: black !important;
+}
+
+.mainpg textarea {
+	border-color: black !important;
+}
+
 /* Box */
 
 .box {

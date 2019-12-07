@@ -13,6 +13,7 @@
     "mongoose": "^5.5.13",
     "particlesjs": "^2.2.3",
     "path": "^0.12.7",
+    "request": "^2.88.0",
     "validator": "^11.0.0"
   },
   "devDependencies": {},
