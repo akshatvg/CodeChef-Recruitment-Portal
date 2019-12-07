@@ -19,7 +19,7 @@
 	});
 
 	// Play initial animations on page load.
-	$(function () { 
+	$(function () {
 		setTimeout(function () {
 			$('#preloader').fadeOut('slow', function () {
 				$(this).remove();
@@ -36,10 +36,8 @@
 
 	grecaptcha.ready(function () {
 		grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
-			action: 'exam'
-		});
+			action: 'homepage'
 	});
-
 
 	// Fix: Flexbox min-height bug on IE.
 	if (browser.name == 'ie') {
