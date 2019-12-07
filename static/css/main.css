@@ -1844,7 +1844,7 @@ div#preloader {
 	height: 100%;
 	width: 100%;
 	overflow: visible;
-	background: #121114 url('../images/preloader.gif') no-repeat center center;
+	background: #0E0C0D url('../images/preloader.gif') no-repeat center center;
 	margin: 0;
 }
 

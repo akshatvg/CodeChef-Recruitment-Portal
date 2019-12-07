@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 var path = require('path')
 var session = require('express-session')
-const request=require('request')
+const request = require('request')
 //db connection
 require('dotenv').config()
 var db = require('./config/keys')
@@ -22,7 +22,7 @@ var bodyParser = require('body-parser')
 var validator = require('validator')
 var bcrypt = require('bcryptjs')
 
-var rateLimit=require('express-rate-limit')
+var rateLimit = require('express-rate-limit')
 
 var port = process.env.PORT || 3002
 
@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100 // limit each IP to 100 requests per windowMs
-  })
+})
 app.use(limiter)
 
 app.set('view engine', 'hbs')
@@ -59,23 +59,29 @@ var auth = function (req, res, next) {
 };
 
 var verifyCaptcha = (req, res, next) => {
-    var bodydata=JSON.parse(req.body.display)
+    var bodydata = JSON.parse(req.body.display)
     if (!bodydata['recaptcha']) {
-      return res.json({status: false});
+        return res.json({
+            status: false
+        });
     }
     console.log('wwwwwww')
     const token = bodydata['recaptcha'] || req.query['recaptcha'];
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTSECRET}&response=${token}&remoteip=${req.connection.remoteAddress}`;
-  
-    request(verificationUrl, (error, response, body)=> {
-      body = JSON.parse(body);
-      if (body.success !== undefined && !body.success) {
-        return res.json({status: false});
-      }
-      return res.json({status: true});
-      next();
+
+    request(verificationUrl, (error, response, body) => {
+        body = JSON.parse(body);
+        if (body.success !== undefined && !body.success) {
+            return res.json({
+                status: false
+            });
+        }
+        return res.json({
+            status: true
+        });
+        next();
     });
-  };
+};
 
 //defining global variables
 var userSession
@@ -93,7 +99,7 @@ app.get('/', (req, res) => {
 var bigError1 = []
 var bigError2 = []
 var bigSuccess = []
-app.post('/userSignup',(req, res) => {
+app.post('/userSignup', (req, res) => {
     var uname1 = req.body.first_name;
     var uname2 = req.body.last_name;
     var uemail = req.body.email;
@@ -131,7 +137,7 @@ app.post('/userSignup',(req, res) => {
     }
 
     if (errors.length > 0) {
-        bigError1= errors
+        bigError1 = errors
         res.redirect('/index#sign-up')
     } else {
         userRegister.findOne({
@@ -189,7 +195,7 @@ app.post('/userlogin', (req, res) => {
     // console.log(lname)
     // console.log(lpass)
     bigError2 = []
-    bigSuccess=[]
+    bigSuccess = []
     if (lname == 'admin' && lpass == 'admin') {
         res.render('admin', {
             msg: 'Admin'
@@ -262,7 +268,7 @@ app.get('/index', function (req, res) {
     res.render('index', {
 
         errors1: bigError1,
-        errors2:bigError2,
+        errors2: bigError2,
         success: bigSuccess,
         msgsent: mymsg
     })
@@ -665,14 +671,14 @@ app.get('/appexam', auth, function (err, res) {
                         var arr = []
                         l = []
                         ctr1 = 0
-                        while (ctr1 != 10) {
+                        while (ctr1 != 4) {
                             x = Math.floor(Math.random() * n)
                             if (l.includes(x) == false) {
                                 l.push(x)
                                 ctr1 = ctr1 + 1
                             }
                         }
-                        for (i = 0; i < 10; i++) {
+                        for (i = 0; i < 4; i++) {
                             var value = userTest1[l[i]].ques
                             arr.push(value)
                         }
@@ -717,7 +723,7 @@ app.get('/opexam', auth, function (err, res) {
                 var arr = []
                 l = []
                 ctr = 0
-                while (ctr != 5) {
+                while (ctr != 8) {
                     x = Math.floor(Math.random() * n)
                     if (l.includes(x) == false) {
                         l.push(x)
@@ -725,7 +731,7 @@ app.get('/opexam', auth, function (err, res) {
                     }
                 }
 
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < 8; i++) {
                     var value = userTest[l[i]].ques
                     arr.push(value)
                 }
@@ -816,7 +822,7 @@ app.get('/cwexam', auth, function (err, res) {
                 var arr = []
                 l = []
                 ctr = 0
-                while (ctr != 5) {
+                while (ctr != 9) {
                     x = Math.floor(Math.random() * n)
                     if (l.includes(x) == false) {
                         l.push(x)
@@ -824,7 +830,7 @@ app.get('/cwexam', auth, function (err, res) {
                     }
                 }
 
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < 9; i++) {
                     var value = userTest[l[i]].ques
                     arr.push(value)
                 }
@@ -843,54 +849,79 @@ app.get('/cwexam', auth, function (err, res) {
 
 })
 
-app.get('/designexam',auth,function(err,res){
+app.get('/designexam', auth, function (err, res) {
 
-    ans.findOne({email:useremail,title:'Design'},(err,user)=>{
-        let errors=[]
-        if(user)
-    {
-        errors.push({text:'You have already attempted this test!'})
-            res.render('exam',{
-                msg:message1,
-                errors:errors
+    ans.findOne({
+        email: useremail,
+        title: 'Design'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
             })
-    }
-    else{
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
 
-        myques.find({title:'Design'},(err,userTest)=>{
-            var n=userTest.length
-            console.log(n)
-            var arr=[]
-            l=[]
-            ctr=0
-            while(ctr!=5)
-            {
-                x=Math.floor(Math.random()*n)
-                if(l.includes(x)==false)
-                {
-                    l.push(x)
-                    ctr=ctr+1
+            myques.find({
+                title: 'Design'
+            }, (err, userTest) => {
+                var n = userTest.length
+                console.log(n)
+                var arr = []
+                l = []
+                ctr = 0
+                while (ctr != 12) {
+                    x = Math.floor(Math.random() * n)
+                    if (l.includes(x) == false) {
+                        l.push(x)
+                        ctr = ctr + 1
+                    }
                 }
-            }
-            
-            for(i=0;i<5;i++)
-            {
-                var value=userTest[l[i]].ques
-                arr.push(value)
-            }
-            
-            res.render('test',{
-                title:'Design',
-                dom:'Design',
-                ques:arr,
-                name:message1
+
+                for (i = 0; i < 12; i++) {
+                    var value = userTest[l[i]].ques
+                    arr.push(value)
+                }
+
+                res.render('test', {
+                    title: 'Design',
+                    dom: 'Design',
+                    ques: arr,
+                    name: message1
+                })
+
             })
-        
-        })
-    }
+        }
     })
 })
 
+app.get(function (req, res) {
+    res.status(404).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(401).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(500).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(404).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(401).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(500).render('404');
+});
 
 app.listen(port, () => {
     console.log('Server is running on http://localhost:3002')

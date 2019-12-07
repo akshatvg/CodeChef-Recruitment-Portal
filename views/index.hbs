@@ -48,14 +48,14 @@
 				<ul>
 					<li><a href="#about">About</a></li>
 					<li><a href="#instructions">Instructions</a></li>
-					<li><a href="#sign-up">Register</a></li>
+					<li><a href="#login">Sign In</a></li>
 					<li><a href="#contact">Contact</a></li>
 				</ul>
 			</nav>
 
 			<nav>
 				<ul>
-					<li><a href="#login">Sign In Here</a></li>
+					<li><a href="#sign-up">Register Here</a></li>
 				</ul>
 			</nav>
 
@@ -86,22 +86,23 @@
 			<article id="instructions">
 				<h2 class="major">Instructions</h2>
 				<p class="about-txt">
-					1) Register yourself on the portal. You'll be redirected back to the home
-					page once the user is created.
+					1) You can attempt a test only once.
 				</p>
 				<p class="about-txt">
-					2) Sign In to your account using the same credentials.
+					2) Don't leave the page during the test or your attempt will be wasted.
 				</p>
 				<p class="about-txt">
-					3) You have a total of 1 hour to attempt whichever domain's questions you want.
+					3) You are allowed to attempt questions from all domains.
 				</p>
 				<p class="about-txt">
-					4) Once you leave a
-					domain's test, you won't be allowed to give it again.
+					4) You can attempt only a maximum of two technical domain tests.
 				</p>
 				<p class="about-txt">
-					5) You are allowed to attempt questions from all
-					domains.
+					5) This test is only for the technical and management domains. Design domain members will be
+					notified soon.
+				</p>
+				<p class="about-txt">
+					6) Your answers will be autosaved if you do not submit them on time.
 				</p>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
 			</article>
@@ -145,7 +146,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Sign Up" class="primary" /></li>
-						<li><input type="reset" value="Reset" class="primary" /></li>
+						<li><input type="reset" value="Clear" class="primary" /></li>
 					</ul>
 				</form>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
@@ -177,7 +178,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Send Message" class="primary" /></li>
-						<li><input type="reset" value="Reset" class="primary" /></li>
+						<li><input type="reset" value="Clear" class="primary" /></li>
 					</ul>
 				</form>
 				<ul class="icons">
@@ -222,7 +223,7 @@
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Sign In" class="primary btnLogin" /></li>
-						<li><input type="reset" value="Reset" class="primary" /></li>
+						<li><input type="reset" value="Clear" class="primary" /></li>
 					</ul>
 				</form>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
@@ -248,61 +249,60 @@
 	<script src="js/main.js"></script>
 	{{!-- <script>
 
-		document.getElementById('formSubmit').addEventListener('submit',(e)=>{
+		document.getElementById('formSubmit').addEventListener('submit', (e) => {
 			e.preventDefault()
 			grecaptcha.ready(() => {
-			grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
-				action: '/userLogin'
-			}).then(async (token) => {
-		
-				var emailsend = document.querySelector('#lemail')
-				var passend = document.querySelector('#lpassword')
+				grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
+					action: '/userLogin'
+				}).then(async (token) => {
 
-				var data = {
+					var emailsend = document.querySelector('#lemail')
+					var passend = document.querySelector('#lpassword')
+
+					var data = {
 						email: emailsend.value,
 						password: passend.value,
 						recaptcha: token
 					}
 					console.log(data)
-					if(emailsend=='admin' && passend=='admin')
-					{
+					if (emailsend == 'admin' && passend == 'admin') {
 						$.ajax({
-						url: '/userLogin',
-						type: "POST",
-						data: {
-							display: JSON.stringify(data)
-						},
-						success: function (data) {
-							console.log('success')
-						},
-						error: function (err) {
-							console.log('error')
-						}
+							url: '/userLogin',
+							type: "POST",
+							data: {
+								display: JSON.stringify(data)
+							},
+							success: function (data) {
+								console.log('success')
+							},
+							error: function (err) {
+								console.log('error')
+							}
 
-					})
+						})
 					}
-					else{
+					else {
 						$.ajax({
-						url: '/userLogin',
-						type: "POST",
-						data: {
-							display: JSON.stringify(data)
-						},
-						success: function (data) {
-							console.log('success')
-						},
-						error: function (err) {
-							console.log('error')
-						}
+							url: '/userLogin',
+							type: "POST",
+							data: {
+								display: JSON.stringify(data)
+							},
+							success: function (data) {
+								console.log('success')
+							},
+							error: function (err) {
+								console.log('error')
+							}
 
-					})
+						})
 					}
-					
+
 				})
 
 			})
 		})
-		
+
 	</script> --}}
 </body>
 
