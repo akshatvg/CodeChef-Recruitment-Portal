@@ -41,14 +41,14 @@
         <header id="header">
             <img class="img-responsive logo" src="images/Logo_White.png" alt="Logo" />
             <div class="content">
+                <div style="position: fixed;">
+                    <h3 id="demo" style="color: red;float: right;">
+                    </h3>
+                    <h3 style="float: right;">
+                        Time Left:</h3>
+                </div>
                 <div class="inner">
                     <h1><span class="dom">{{dom}}</span> Domain: <span class="dom-title">{{title}}</span> </h1>
-                    <div>
-                        <h3 id="demo" style="color: red;float: right;">
-                        </h3>
-                        <h3 style="float: right;">
-                            Time Left:</h3>
-                    </div>
                     <div class="fields">
                         {{#if ques}}
                         {{#each ques}}
