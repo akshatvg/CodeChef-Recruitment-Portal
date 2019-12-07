@@ -899,6 +899,8 @@ app.get('/designexam', auth, function (err, res) {
     })
 })
 
+// Error Messages
+
 app.get(function (req, res) {
     res.status(404).render('404');
 });
@@ -921,6 +923,46 @@ app.use(function (req, res) {
 
 app.use(function (req, res) {
     res.status(500).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(400).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(400).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(403).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(403).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(502).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(502).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(503).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(503).render('404');
+});
+
+app.get(function (req, res) {
+    res.status(504).render('404');
+});
+
+app.use(function (req, res) {
+    res.status(504).render('404');
 });
 
 app.listen(port, () => {
