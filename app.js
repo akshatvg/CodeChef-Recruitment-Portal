@@ -72,7 +72,7 @@ var verifyCaptcha = (req, res, next) => {
       if (body.success !== undefined && !body.success) {
         return res.json({status: false});
       }
-      req.session.captcha = true;
+      return res.json({status: true});
       next();
     });
   };
@@ -182,13 +182,14 @@ app.post('/userSignup',(req, res) => {
 app.post('/userlogin', (req, res) => {
 
     userSession = req.session
-    var bodydata=JSON.parse(req.body.display)
-    console.log(bodydata)
-    var lname = bodydata.email;
-    var lpass = bodydata.password;
-    console.log(lname)
-    console.log(lpass)
+    //var bodydata=JSON.parse(req.body.display)
+    // console.log(bodydata)
+    var lname = req.body.email;
+    var lpass = req.body.password;
+    // console.log(lname)
+    // console.log(lpass)
     bigError2 = []
+    bigSuccess=[]
     if (lname == 'admin' && lpass == 'admin') {
         res.render('admin', {
             msg: 'Admin'
