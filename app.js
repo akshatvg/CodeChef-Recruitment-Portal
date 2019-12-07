@@ -22,7 +22,7 @@ var bodyParser = require('body-parser')
 var validator = require('validator')
 var bcrypt = require('bcryptjs')
 
-//var rateLimit=require('express-rate-limit')
+var rateLimit=require('express-rate-limit')
 
 var port = process.env.PORT || 3002
 
@@ -179,10 +179,11 @@ app.post('/userSignup',(req, res) => {
 })
 
 
-app.post('/userlogin',verifyCaptcha, (req, res) => {
+app.post('/userlogin', (req, res) => {
 
     userSession = req.session
     var bodydata=JSON.parse(req.body.display)
+    console.log(bodydata)
     var lname = bodydata.email;
     var lpass = bodydata.password;
     console.log(lname)

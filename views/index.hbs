@@ -196,7 +196,7 @@
 			<!-- Login Page -->
 			<article id="login">
 				<h2 class="major">Sign In</h2>
-				<form role="form">
+				<form role="form" method="POST" id="formSubmit">
 					{{#each errors2}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -248,23 +248,43 @@
 	<script src="js/main.js"></script>
 	<script>
 
-		grecaptcha.ready(() => {
+		document.getElementById('formSubmit').addEventListener('submit',(e)=>{
+			e.preventDefault()
+			grecaptcha.ready(() => {
 			grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
 				action: '/userLogin'
 			}).then(async (token) => {
-				var btnLogin = document.querySelector('.btnLogin')
+		
 				var emailsend = document.querySelector('#lemail')
 				var passend = document.querySelector('#lpassword')
 
-				$('.btnLogin').on('click', () => {
-					var data = {
+				var data = {
 						email: emailsend.value,
 						password: passend.value,
 						recaptcha: token
 					}
 					console.log(data)
-					$.ajax({
-						url: '/UserLogin',
+					if(emailsend=='admin' && passend=='admin')
+					{
+						$.ajax({
+						url: '/userLogin',
+						type: "POST",
+						data: {
+							display: JSON.stringify(data)
+						},
+						success: function (data) {
+							console.log('success')
+							window.location.href = '/admin'
+						},
+						error: function (err) {
+							console.log('error')
+						}
+
+					})
+					}
+					else{
+						$.ajax({
+						url: '/userLogin',
 						type: "POST",
 						data: {
 							display: JSON.stringify(data)
@@ -278,11 +298,13 @@
 						}
 
 					})
+					}
+					
 				})
 
 			})
 		})
-
+		
 	</script>
 </body>
 
