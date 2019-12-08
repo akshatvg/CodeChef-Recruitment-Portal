@@ -11,7 +11,7 @@ mongoose.connect(db.mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-
+var secretkey=db.secret
 //models
 var userRegister = require('./models/db-mongoose')
 var myques = require('./models/db-ques')
@@ -55,7 +55,7 @@ var auth = function (req, res, next) {
         return next();
 
     } else
-        return res.sendStatus(401);
+        res.render('404');
 };
 var bodydata
 var verifyCaptcha = (req, res, next) => {
@@ -68,7 +68,7 @@ var verifyCaptcha = (req, res, next) => {
     }
     
     const token = bodydata['recaptcha'] || req.query['recaptcha'];
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTSECRET}&response=${token}&remoteip=${req.connection.remoteAddress}`;
+    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${token}&remoteip=${req.connection.remoteAddress}`;
 
     request(verificationUrl, (error, response, body) => {
         body = JSON.parse(body);
