@@ -124,24 +124,24 @@
 					<div class="fields mainpg">
 						<div class="field half">
 							<label for="first_name">First Name</label>
-							<input type="text" name="first_name" id="first_name" required />
+							<input type="text" name="first_name" id="first_name" required onkeyup="checkFirst()" />
 						</div>
 						<div class="field half">
 							<label for="last_name">Last Name</label>
-							<input type="text" name="last_name" id="last_name" required />
+							<input type="text" name="last_name" id="last_name" required onkeyup="checkLast()" />
 						</div>
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" required />
+							<input type="text" name="email" id="email" required onkeyup="checkEmail()" />
 						</div>
 						<div class="field half">
 							<label for="regno">Registration Number</label>
 							<input type="text" name="regno" id="regno" onkeyup="this.value=this.value.toUpperCase();"
-								required />
+								required onkeyup="checkRegNo()" />
 						</div>
 						<div class="field half">
 							<label for="phoneno">Phone Number</label>
-							<input type="text" name="phoneno" id="phoneno" required />
+							<input type="text" name="phoneno" id="phoneno" required onkeyup="checkPhone()" />
 						</div>
 						<div class="field half">
 							<label for="password">Password</label>
@@ -218,7 +218,7 @@
 
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="lemail" required />
+							<input type="text" name="email" id="lemail" required onkeyup="checkEmail()" />
 						</div>
 						<div class="field half">
 							<label for="password">Password</label>
@@ -296,6 +296,85 @@
 
 			})
 		})
+
+	</script>
+
+	<script>
+		let email = document.getElementById("email");
+		let phoneno = document.getElementById("phoneno");
+		let regno = document.getElementById("regno");
+		let first_name = document.getElementById("first_name");
+		let last_name = document.getElementById("last_name");
+
+		function checkEmail() {
+			let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			if (re.test(email.value.trim())) {
+				status.push("true")
+			}
+			else {
+				email.value = "";
+				email.style.borderColor = "red";
+				email.placeholder = "Please enter valid email id"
+				status.push("false")
+			}
+		}
+
+		function checkFirst() {
+			if (first_name.value.trim().length == 0) {
+				first_name.value = "";
+				first_name.style.borderColor = "red";
+				first_name.placeholder = "Please enter valid first name"
+				status.push("false")
+			}
+			else {
+				status.push("true")
+			}
+		}
+
+		function checkLast() {
+			if (last_name.value.trim().length == 0) {
+				last_name.value = "";
+				last_name.style.borderColor = "red";
+				last_name.placeholder = "Please enter valid last name"
+				status.push("false")
+			}
+			else {
+				status.push("true")
+			}
+		}
+
+		function checkRegNo() {
+			if (regno.value.trim().length == 9) {
+				var check = /^1[89][BM][A-Z]{2}[0-9]{4}$/
+				if (rno.match(check)) {
+					status.push("true")
+				}
+				else {
+					regno.value = "";
+					regno.style.borderColor = "red";
+					regno.placeholder = "Please enter valid registration number"
+					status.push("false")
+				}
+				else {
+					regno.value = "";
+					regno.style.borderColor = "red";
+					regno.placeholder = "Please enter valid registration number"
+					status.push("false")
+				}
+			}
+		}
+
+		function checkPhone() {
+			if (phoneno.value.trim().length < 8 || phoneno.value.trim().length > 12) {
+				phoneno.value = "";
+				phoneno.style.borderColor = "Red";
+				phoneno.placeholder = "Please enter valid phone number";
+				status.push("false")
+			}
+			else {
+				status.push("true")
+			}
+		}
 
 	</script>
 </body>

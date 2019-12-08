@@ -117,65 +117,80 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
     <script>
-        console.log('conected')
-        // Set the date being counting down to
-        var oldDateObj = new Date().getTime();
-        var countDownDate = moment(oldDateObj).add(1, 'm').toDate();
+        timeLeft = true
 
-        // count down updated every 1 second
-        var x = setInterval(function () {
+        $(document).ready(function () {
+            if (timeLeft == true) {
+                function TimerOn() {
+                    console.log('conected')
+                    // Set the date being counting down to
+                    var oldDateObj = new Date().getTime();
+                    var countDownDate = moment(oldDateObj).add(1, 'm').toDate();
 
-            // today's date and time
-            var now = new Date().getTime();
+                    // count down updated every 1 second
+                    var x = setInterval(function () {
 
-            // distance between now and the count down date
-            var distance = countDownDate - now;
+                        // today's date and time
+                        var now = new Date().getTime();
 
-            // Time calculations for minutes and seconds
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        // distance between now and the count down date
+                        var distance = countDownDate - now;
 
-            // Output the result in an element with id="demo"
-            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+                        // Time calculations for minutes and seconds
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // when the count down is over display time over
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "Time Out";
+                        // Output the result in an element with id="demo"
+                        document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
 
-                var btnSubmit = document.querySelector('.btnSubmit')
-                var dom = document.querySelector('.dom')
-                var domTitle = document.querySelector('.dom-title')
-                var resp1 = document.querySelectorAll('.sub')
-                var ques1 = document.querySelectorAll('.ques')
-                var arr = []
+                        // when the count down is over display time over
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("demo").innerHTML = "Time Out";
 
-                var i
-                for (i = 0; i < ques1.length; i++) {
-                    var newobj = {
-                        ques: ques1[i].innerHTML,
-                        answer: resp1[i].value
+                            var btnSubmit = document.querySelector('.btnSubmit')
+                            var dom = document.querySelector('.dom')
+                            var domTitle = document.querySelector('.dom-title')
+                            var resp1 = document.querySelectorAll('.sub')
+                            var ques1 = document.querySelectorAll('.ques')
+                            var arr = []
 
-                    }
-                    arr.push(newobj)
+                            var i
+                            for (i = 0; i < ques1.length; i++) {
+                                var newobj = {
+                                    ques: ques1[i].innerHTML,
+                                    answer: resp1[i].value
+
+                                }
+                                arr.push(newobj)
+                            }
+                            var data = { domain: dom.innerHTML, title: domTitle.innerHTML, response: arr }
+
+                            $.ajax({
+                                url: '/storeResponse',
+                                type: "POST",
+                                data: { display: JSON.stringify(data) },
+                                success: function (data) {
+                                    console.log('success')
+                                    window.location.href = '/exam'
+                                },
+                                error: function (err) {
+                                    console.log('error')
+                                }
+
+                            })
+                        }
+                    }, 1000);
                 }
-                var data = { domain: dom.innerHTML, title: domTitle.innerHTML, response: arr }
-
-                $.ajax({
-                    url: '/storeResponse',
-                    type: "POST",
-                    data: { display: JSON.stringify(data) },
-                    success: function (data) {
-                        console.log('success')
-                        window.location.href = '/exam'
-                    },
-                    error: function (err) {
-                        console.log('error')
-                    }
-
-                })
             }
-        }, 1000);
+            else {
+                console.log("done with the test")
+            }
+        });
+
+        $(".btnSubmit").onclick(function () {
+            timeLeft = false
+        });
     </script>
 
 </body>
