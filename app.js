@@ -73,12 +73,13 @@ var verifyCaptcha = (req, res, next) => {
     request(verificationUrl, (error, response, body) => {
         body = JSON.parse(body);
         
-        if (body.success !== undefined && body.success) {
+        if (body.success !== undefined && !body.success) {
             console.log(body)
             return res.json({
                 status: false
             });
         }
+        console.log('abcd')
         next();
     });
 };
@@ -234,6 +235,7 @@ app.post('/userlogin', verifyCaptcha, (req, res) => {
 
     userSession = req.session
     var bodydata = JSON.parse(req.body.display)
+    res.redirect('/verify')
 
 })
 
