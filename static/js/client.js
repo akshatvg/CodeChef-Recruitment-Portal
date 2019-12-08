@@ -2,8 +2,12 @@ var btnSubmit = document.querySelector('.btnSubmit')
 var dom = document.querySelector('.dom')
 var domTitle = document.querySelector('.dom-title')
 var resp1 = document.querySelectorAll('.sub')
-var ques1 = document.querySelectorAll('.ques')
+var ques1 = document.querySelectorAll('.ques1')
 var arr = []
+
+console.log(resp1[1].value)
+console.log(ques1.length)
+console.log(resp1.length)
 $('.btnSubmit').on('click', () => {
 
     var i

@@ -52,6 +52,7 @@
                     <div class="fields">
                         {{#if ques}}
                         {{#each ques}}
+                        <p hidden class="ques1">{{this}}</p>
                         <strong>
                             <b>
                                 <h3 class="ques" style="text-align: left;">{{this}}</h3>
@@ -67,6 +68,7 @@
                         {{/if}}
                         {{#if mques}}
                         {{#each mques}}
+                        <p hidden class="ques1">{{this}}</p>
                         {{#each this.data}}
                         <strong>
                             <b>
@@ -83,21 +85,6 @@
                         </form>
                         {{/each}}
                         {{/if}}
-                        {{!-- {{#if mques9}}
-                        {{#each mques9}}
-                        <strong>
-                            <b>
-                                <h3 class="ques" style="text-align: left;">{{this}}</h3>
-                            </b>
-                        </strong>
-                        {{/each}}
-                        {{/if}}
-                        <form>
-                            <div class="form-group">
-                                <label for="answer" style="text-align: left;">Your Answer:</label>
-                                <textarea class="form-control sub no-copy-paste" rows="5" id="comment"></textarea>
-                            </div>
-                        </form> --}}
 
                     </div>
                 </div>
@@ -136,7 +123,7 @@
         console.log('conected')
         // Set the date being counting down to
         var oldDateObj = new Date().getTime();
-        var countDownDate = moment(oldDateObj).add(15, 'm').toDate();
+        var countDownDate = moment(oldDateObj).add(1, 'm').toDate();
 
         // count down updated every 1 second
         var x = setInterval(function () {
@@ -163,11 +150,12 @@
                 var dom = document.querySelector('.dom')
                 var domTitle = document.querySelector('.dom-title')
                 var resp1 = document.querySelectorAll('.sub')
-                var ques1 = document.querySelectorAll('.ques')
+                var ques1 = document.querySelectorAll('.ques1')
                 var arr = []
-
+                
                 var i
-                for (i = 0; i < ques1.length; i++) {
+                for (i = 0; i < ques1.length; i++) 
+                {
                     var newobj = {
                         ques: ques1[i].innerHTML,
                         answer: resp1[i].value
