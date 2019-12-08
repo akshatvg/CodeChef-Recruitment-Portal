@@ -1,0 +1,7 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+	cache-control = '''
+    public, 
+    max-age=345600,
+	must-revalidate'''

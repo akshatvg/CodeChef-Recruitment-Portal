@@ -11,6 +11,7 @@
     "express-recaptcha": "^5.0.1",
     "express-session": "^1.16.1",
     "hbs": "^4.0.4",
+    "lodash": "^4.17.15",
     "mongodb": "^3.2.5",
     "mongoose": "^5.7.14",
     "particlesjs": "^2.2.3",
@@ -18,7 +19,9 @@
     "request": "^2.88.0",
     "validator": "^11.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-cli": "^3.3.10"
+  },
   "scripts": {
     "test": "node app.js",
     "start": "node app.js",
