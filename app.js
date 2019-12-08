@@ -255,7 +255,7 @@ app.post('/contact', (req, res) => {
             throw err
         }
         console.log('message sent')
-        mymsg = 'Thanks for contacting!!'
+        mymsg = 'Thanks for reaching out to us. We will get back to you soon!'
         res.redirect('/index#contact')
 
     })

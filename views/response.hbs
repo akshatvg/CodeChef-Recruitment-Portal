@@ -54,37 +54,43 @@
                             <p style="color: red">{{msg2}}</p>
                             <div class="field">
                                 {{#each arr}}
-                                <div class="card" style="width: auto;">
-                                    <div>
-                                        <h4><b>Submission:</b></h4>
-                                    </div>
-                                    <ul class="list-group list-group-flush" style="box-shadow: 0px 1px 5px black;">
-                                        <li class="list-group-item" style="text-transform: capitalize;"><b>
-                                                <h5>{{this.name}}</h5>
-                                            </b></li>
-                                        <li class="list-group-item"><b>
-                                                <h5>{{this.email}}</h5>
-                                            </b></li>
-                                        {{#each this.response}}
-                                        <li class="list-group-item"><b>Question:</b> {{this.ques}}<br><b>Answer:</b>
-                                            {{this.answer}}</li>
-                                        {{/each}}
-                                    </ul>
-                                    {{/each}}
+                                <div>
+                                    <h2 align="left"><b>Submission:</b></h2>
                                 </div>
+                                <ul
+                                    style="list-style-type: none;background-color:rgba(245, 245, 245, 0.829);color:black;padding:10px;border-radius:20px;">
+                                    <li><b>
+                                            <h4 style="color:black;text-align:left;">Name : <u>{{this.name}}</u></h4>
+                                        </b></li>
+                                    <li><b>
+                                            <h4 style="color:black;text-align:left;">Email : <u>{{this.email}}</u></h4>
+                                        </b></li>
+                                    {{#each this.response}}
+                                    <li>
+                                        <h6 style="color:rgba(0, 0, 0, 0.774);text-align:left;"><b
+                                                style="color:rgb(189, 75, 75);text-align:left;">Question:</b>
+                                            {{this.ques}}</h6>
+                                        <h6 style="color:black;text-align:left;"><b
+                                                style="color:rgb(78, 240, 78);text-align:left;">Answer:</b><b style="color:black;">
+                                                {{this.answer}} </b></h6>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                                {{/each}}
                             </div>
                         </form>
                     </div>
-                </div>
 
-                <a href="/admin">
-                    <button class="primary">Go Back
-                    </button>
-                </a>
-                <a href="/adminlogout">
-                    <button class="primary">Logout
-                    </button>
-                </a>
+                    <a href="/admin">
+                        <button class="primary">Go Back
+                        </button>
+                    </a>
+                    <a href="/adminlogout">
+                        <button class="primary">Logout
+                        </button>
+                    </a>
+
+                </div>
 
         </header>
 
@@ -101,11 +107,13 @@
     <div id="bg"></div>
 
     <!-- Scripts -->
+    <script src="js/client.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/browser.min.js"></script>
     <script src="js/breakpoints.min.js"></script>
     <script src="js/util.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
 </body>
 
