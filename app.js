@@ -113,7 +113,7 @@ app.get('/verify', (req, res) => {
             console.log(user)
             if (user.length == 0) {
                 errors.push({
-                    text: 'Invalid email'
+                    text: 'Email not found!'
                 })
                 bigError2 = errors
                 res.redirect('/index#login')
