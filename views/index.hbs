@@ -21,6 +21,10 @@
 	<!-- Particle.js-->
 	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+	<!-- reCaptcha -->
+	<script type="text/javascript"
+		src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
+
 </head>
 
 <body>
@@ -100,6 +104,9 @@
 				</p>
 				<p class="about-txt">
 					6) Your answers will be autosaved if you do not submit them on time.
+				</p>
+				<p class="about-txt">
+					7) In multiple choice questions, type the whole option into the text box.
 				</p>
 				<img src="images/CC_black.png" alt="CodeChef- VIT" class="image main fit right" />
 			</article>
@@ -238,9 +245,6 @@
 	<!-- BG -->
 	<div id="bg"></div>
 
-	<!-- reCaptcha -->
-	<script src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
-
 	<!-- Scripts -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/browser.min.js"></script>
@@ -267,7 +271,7 @@
 					console.log(data)
 					if (emailsend.value == 'admin' && passend.value == 'admin') {
 						window.location.href = '/admin'
-							
+
 					}
 					else {
 						$.ajax({
@@ -279,7 +283,7 @@
 							success: function (data) {
 								console.log('success')
 								window.location.href = '/verify'
-								
+
 							},
 							error: function (err) {
 								console.log('error')

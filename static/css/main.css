@@ -1443,10 +1443,11 @@ body.is-preload #bg:before {
 }
 
 #header .logo2 {
-	height: 8.0rem;
+	height: 6.75rem;
 	width: auto;
 	line-height: 4.75rem;
 	margin-bottom: 1rem;
+	padding: 5px;
 }
 
 
@@ -1872,4 +1873,8 @@ a:active,
 a:focus {
 	outline: 0;
 	text-decoration: none;
+}
+
+.grecaptcha-badge {
+	z-index: 9999999;
 }
