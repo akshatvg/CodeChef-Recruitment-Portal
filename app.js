@@ -73,7 +73,7 @@ var verifyCaptcha = (req, res, next) => {
     request(verificationUrl, (error, response, body) => {
         body = JSON.parse(body);
         
-        if (body.success !== undefined && !body.success) {
+        if (body.success !== undefined && body.success) {
             console.log(body)
             return res.json({
                 status: false
