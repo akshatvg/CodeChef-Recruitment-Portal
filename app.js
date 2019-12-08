@@ -416,24 +416,6 @@ app.get('/success', (req, res) => {
 
 app.get('/webexam', function (err, res) {
 
-    ans.find({
-        email: useremail,
-        domain: 'Technical'
-    }, (err, manyuser) => {
-        if (err) {
-            throw err
-        }
-
-        if (manyuser.length == 2) {
-            let errors = []
-            errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
-            })
-            res.render('exam', {
-                msg: message1,
-                errors: errors
-            })
-        } else {
             ans.findOne({
                 email: useremail,
                 title: 'Frontend Web Development'
@@ -460,6 +442,7 @@ app.get('/webexam', function (err, res) {
                             var n = userTest.length
                             var arr = []
                             var store=[]
+                            var jugaad=[]
                             l = []
                             ctr = 0
                             while (ctr != 10) {
@@ -474,6 +457,7 @@ app.get('/webexam', function (err, res) {
                                 if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -489,6 +473,7 @@ app.get('/webexam', function (err, res) {
                                 dom: 'Technical',
                                 ques: arr,
                                 mques:store,
+                                jugaad,
                                 name: message1
 
                             })
@@ -500,31 +485,10 @@ app.get('/webexam', function (err, res) {
                 }
             })
 
-        }
-    })
-
 })
 
 app.get('/webexambackend', function (err, res) {
 
-    ans.find({
-        email: useremail,
-        domain: 'Technical'
-    }, (err, manyuser) => {
-        if (err) {
-            throw err
-        }
-
-        if (manyuser.length == 2) {
-            let errors = []
-            errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
-            })
-            res.render('exam', {
-                msg: message1,
-                errors: errors
-            })
-        } else {
             ans.findOne({
                 email: useremail,
                 title: 'Backend Web Development'
@@ -551,6 +515,7 @@ app.get('/webexambackend', function (err, res) {
                             var n = userTest.length
                             var store=[]
                             var arr = []
+                            var jugaad=[]
                             l = []
                             ctr = 0
                             while (ctr != 10) {
@@ -565,6 +530,7 @@ app.get('/webexambackend', function (err, res) {
                             if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -579,6 +545,7 @@ app.get('/webexambackend', function (err, res) {
                                 title: 'Backend Web Development',
                                 dom: 'Technical',
                                 ques: arr,
+                                jugaad,
                                 mques:store,
                                 name: message1
 
@@ -591,31 +558,10 @@ app.get('/webexambackend', function (err, res) {
                 }
             })
 
-        }
-    })
-
 })
 
 app.get('/comcodexam', auth, function (err, res) {
 
-    ans.find({
-        email: useremail,
-        domain: 'Technical'
-    }, (err, manyuser) => {
-        if (err) {
-            throw err
-        }
-
-        if (manyuser.length == 2) {
-            let errors = []
-            errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
-            })
-            res.render('exam', {
-                msg: message1,
-                errors: errors
-            })
-        } else {
             ans.findOne({
                 email: useremail,
                 title: 'Competitive Coding'
@@ -642,6 +588,7 @@ app.get('/comcodexam', auth, function (err, res) {
                             var n = userTest.length
                             var arr = []
                             var store=[]
+                            var jugaad=[]
                             //var store9=[]
                             l = []
                             ctr = 0
@@ -657,6 +604,7 @@ app.get('/comcodexam', auth, function (err, res) {
                                 if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -673,6 +621,7 @@ app.get('/comcodexam', auth, function (err, res) {
                                 dom: 'Technical',
                                 ques: arr,
                                 mques:store,
+                                jugaad,
                                 name: message1
 
                             })
@@ -681,32 +630,11 @@ app.get('/comcodexam', auth, function (err, res) {
                     })
                 }
             })
-
-        }
-    })
 })
 
 
 app.get('/mlaiexam', auth, function (err, res) {
 
-    ans.find({
-        email: useremail,
-        domain: 'Technical'
-    }, (err, manyuser) => {
-        if (err) {
-            throw err
-        }
-
-        if (manyuser.length == 2) {
-            let errors = []
-            errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
-            })
-            res.render('exam', {
-                msg: message1,
-                errors: errors
-            })
-        } else {
             ans.findOne({
                 email: useremail,
                 title: 'Machine Learning & Artificial Intelligence'
@@ -732,6 +660,7 @@ app.get('/mlaiexam', auth, function (err, res) {
                             var n = userTest1.length
                             var arr = []
                             var store=[]
+                            var jugaad=[]
                             l = []
                             ctr1 = 0
                             while (ctr1 != 10) {
@@ -746,6 +675,7 @@ app.get('/mlaiexam', auth, function (err, res) {
                                 if(userTest1[l[i]].ques.includes("$"))
                             {
                                 var str=userTest1[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -761,6 +691,7 @@ app.get('/mlaiexam', auth, function (err, res) {
                                 dom: 'Technical',
                                 ques: arr,
                                 mques:store,
+                                jugaad,
                                 name: message1
 
                             })
@@ -768,30 +699,10 @@ app.get('/mlaiexam', auth, function (err, res) {
                     })
                 }
             })
-        }
-    })
 })
 
 app.get('/appexam', auth, function (err, res) {
 
-    ans.find({
-        email: useremail,
-        domain: 'Technical'
-    }, (err, manyuser) => {
-        if (err) {
-            throw err
-        }
-
-        if (manyuser.length == 2) {
-            let errors = []
-            errors.push({
-                text: 'You cannot attempt more than 2 subdomains in technical domain!'
-            })
-            res.render('exam', {
-                msg: message1,
-                errors: errors
-            })
-        } else {
             ans.findOne({
                 email: useremail,
                 title: 'App Development'
@@ -817,6 +728,7 @@ app.get('/appexam', auth, function (err, res) {
                             var n = userTest1.length
                             var arr = []
                             var store=[]
+                            var jugaad=[]
                             l = []
                             ctr1 = 0
                             while (ctr1 != 10) {
@@ -830,6 +742,7 @@ app.get('/appexam', auth, function (err, res) {
                                 if(userTest1[l[i]].ques.includes("$"))
                             {
                                 var str=userTest1[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -845,6 +758,7 @@ app.get('/appexam', auth, function (err, res) {
                                 dom: 'Technical',
                                 ques: arr,
                                 mques:store,
+                                jugaad,
                                 name: message1
 
                             })
@@ -853,8 +767,6 @@ app.get('/appexam', auth, function (err, res) {
                 }
 
             })
-        }
-    })
 })
 
 app.get('/opexam', auth, function (err, res) {
@@ -885,6 +797,7 @@ app.get('/opexam', auth, function (err, res) {
                     var n = userTest.length
                     var arr = []
                     var store=[]
+                    var jugaad=[]
                     l = []
                     ctr = 0
                     while (ctr != 8) {
@@ -899,6 +812,7 @@ app.get('/opexam', auth, function (err, res) {
                         if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -914,6 +828,7 @@ app.get('/opexam', auth, function (err, res) {
                         dom: 'Management',
                         ques: arr,
                         mques:store,
+                        jugaad,
                         name: message1
 
                     })
@@ -951,6 +866,7 @@ app.get('/sponsexam', auth, function (err, res) {
                     var n = userTest.length
                     var arr = []
                     l = []
+                    var jugaad=[]
                     var store=[]
                     ctr = 0
                     while (ctr != 5) {
@@ -965,6 +881,7 @@ app.get('/sponsexam', auth, function (err, res) {
                         if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -980,6 +897,7 @@ app.get('/sponsexam', auth, function (err, res) {
                         dom: 'Management',
                         ques: arr,
                         mques:store,
+                        jugaad,
                         name: message1
 
                     })
@@ -1017,6 +935,7 @@ app.get('/cwexam', auth, function (err, res) {
                     var arr =[]
                     var store=[]
                     l = []
+                    var jugaad=[]
                     ctr = 0
                     while (ctr != 9) {
                         x = Math.floor(Math.random() * n)
@@ -1030,6 +949,7 @@ app.get('/cwexam', auth, function (err, res) {
                         if(userTest[l[i]].ques.includes("$"))
                             {
                                 var str=userTest[l[i]].ques
+                                jugaad.push(str)
                                 var s=str.split("$")
                                 store.push({data:s})
 
@@ -1045,6 +965,7 @@ app.get('/cwexam', auth, function (err, res) {
                         dom: 'Management',
                         ques: arr,
                         mques:store,
+                        jugaad,
                         name: message1
 
                     })

@@ -68,7 +68,7 @@
                         {{/if}}
                         {{#if mques}}
                         {{#each mques}}
-                        <p hidden class="ques1">{{this}}</p>
+                        <p hidden>{{this}}</p>
                         {{#each this.data}}
                         <strong>
                             <b>
@@ -83,6 +83,11 @@
                                 <textarea class="form-control sub no-copy-paste" rows="5" id="comment"></textarea>
                             </div>
                         </form>
+                        {{/each}}
+                        {{/if}}
+                        {{#if jugaad}}
+                        {{#each jugaad}}
+                        <p hidden class="ju">{{this}}</p>
                         {{/each}}
                         {{/if}}
 
@@ -151,18 +156,31 @@
                 var domTitle = document.querySelector('.dom-title')
                 var resp1 = document.querySelectorAll('.sub')
                 var ques1 = document.querySelectorAll('.ques1')
+                var ju=document.querySelectorAll('.ju')
                 var arr = []
-                
                 var i
-                for (i = 0; i < ques1.length; i++) 
-                {
-                    var newobj = {
-                        ques: ques1[i].innerHTML,
-                        answer: resp1[i].value
+                var aar1=[]
+                var j;
 
-                    }
-                    arr.push(newobj)
+                for(j=0;j<ques1.length;j++)
+                {
+                    aar1.push(ques1[j].innerHTML)
                 }
+                for(j=0;j<ju.length;j++)
+                {
+                    aar1.push(ju[j].innerHTML)
+                }
+                for (i = 0; i < aar1.length; i++) {
+    
+                    var newobj = {
+                    ques: aar1[i],
+                    answer: resp1[i].value
+    
+                     } 
+        
+                        arr.push(newobj)
+                    }
+                
                 var data = { domain: dom.innerHTML, title: domTitle.innerHTML, response: arr }
 
                 $.ajax({
