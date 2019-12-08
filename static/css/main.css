@@ -1878,3 +1878,12 @@ a:focus {
 .grecaptcha-badge {
 	z-index: 9999999;
 }
+
+.spacing-test {
+	margin-top: 3.5rem;
+	margin-bottom: 3.5rem;
+}
+
+.inner h1{
+	margin-bottom: 3.5rem;
+}

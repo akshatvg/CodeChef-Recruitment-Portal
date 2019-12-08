@@ -11,7 +11,7 @@ mongoose.connect(db.mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-var secretkey=db.secret
+var secretkey = db.secret
 //models
 var userRegister = require('./models/db-mongoose')
 var myques = require('./models/db-ques')
@@ -60,19 +60,19 @@ var auth = function (req, res, next) {
 var bodydata
 var verifyCaptcha = (req, res, next) => {
     bodydata = JSON.parse(req.body.display)
-    
+
     if (!bodydata['recaptcha']) {
         return res.json({
             status: false
         });
     }
-    
+
     const token = bodydata['recaptcha'] || req.query['recaptcha'];
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${token}&remoteip=${req.connection.remoteAddress}`;
 
     request(verificationUrl, (error, response, body) => {
         body = JSON.parse(body);
-        
+
         if (body.success !== undefined && !body.success) {
             console.log(body)
             return res.json({
@@ -102,45 +102,45 @@ app.get('/verify', (req, res) => {
     bigSuccess = []
     var lname = bodydata.email;
     var lpass = bodydata.password;
-        console.log('wwwwwww1')
-        userRegister.find({
-            email: lname
-        }, (err, user) => {
-            let errors = []
-            if (err) {
-                throw err
-            }
-            console.log(user)
-            if (user.length == 0) {
-                errors.push({
-                    text: 'Email not found!'
-                })
-                bigError2 = errors
-                res.redirect('/index#login')
-            } else {
-                console.log(user[0].password)
-                bcrypt.compare(lpass, user[0].password, function (err, result) {
-                    if (result == false) {
-                        errors.push({
-                            text: 'Invalid password'
-                        })
-                        bigError2 = errors
-                        res.redirect('/index#login')
-                    } else {
-                        Name = user[0].name
-                        message1 = user[0].name
-                        useremail = user[0].email
-                        console.log("message1: " + message1)
-                        req.session.userName = Name
-                        res.redirect('/exam')
-                    }
+    console.log('wwwwwww1')
+    userRegister.find({
+        email: lname
+    }, (err, user) => {
+        let errors = []
+        if (err) {
+            throw err
+        }
+        console.log(user)
+        if (user.length == 0) {
+            errors.push({
+                text: 'Email not found!'
+            })
+            bigError2 = errors
+            res.redirect('/index#login')
+        } else {
+            console.log(user[0].password)
+            bcrypt.compare(lpass, user[0].password, function (err, result) {
+                if (result == false) {
+                    errors.push({
+                        text: 'Invalid password'
+                    })
+                    bigError2 = errors
+                    res.redirect('/index#login')
+                } else {
+                    Name = user[0].name
+                    message1 = user[0].name
+                    useremail = user[0].email
+                    console.log("message1: " + message1)
+                    req.session.userName = Name
+                    res.redirect('/exam')
+                }
 
-                })
+            })
 
-            }
-        })
-    
-    
+        }
+    })
+
+
 })
 var bigError1 = []
 var bigError2 = []
@@ -306,9 +306,9 @@ app.get('/viewSub', function (req, res) {
 
 })
 
-app.get('/admin', function (req, res) {
+app.get('/Akshat_Is_Awesome', function (req, res) {
     message2 = ""
-    res.render('admin', {
+    res.render('Akshat_Is_Awesome', {
         msg: 'Admin',
     })
 
@@ -416,357 +416,357 @@ app.get('/success', (req, res) => {
 
 app.get('/webexam', function (err, res) {
 
-            ans.findOne({
-                email: useremail,
-                title: 'Frontend Web Development'
-            }, (err, user) => {
-                let errors = []
+    ans.findOne({
+        email: useremail,
+        title: 'Frontend Web Development'
+    }, (err, user) => {
+        let errors = []
 
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
+                title: 'Frontend Web Development'
+            }, (err, userTest) => {
+                if (userTest.length == 0 || userTest.length != 18) {
+                    res.render('no_ques', {
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
-                    myques.find({
-                        title: 'Frontend Web Development'
-                    }, (err, userTest) => {
-                        if (userTest.length == 0 || userTest.length!=18) {
-                            res.render('no_ques', {
-                                noques: 'Questions are yet to be added'
-                            })
-                        } else {
-                            var n = userTest.length
-                            var arr = []
-                            var store=[]
-                            var jugaad=[]
-                            l = []
-                            ctr = 0
-                            while (ctr != 10) {
-                                x = Math.floor(Math.random() * n)
-                                if (l.includes(x) == false) {
-                                    l.push(x)
-                                    ctr = ctr + 1
-                                }
-                            }
-
-                            for (i = 0; i < 10; i++) {
-                                if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
-
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
-                            }
-
-                            res.render('mcq', {
-                                title: 'Frontend Web Development',
-                                dom: 'Technical',
-                                ques: arr,
-                                mques:store,
-                                jugaad,
-                                name: message1
-
-                            })
-
+                    var n = userTest.length
+                    var arr = []
+                    var store = []
+                    var jugaad = []
+                    l = []
+                    ctr = 0
+                    while (ctr != 10) {
+                        x = Math.floor(Math.random() * n)
+                        if (l.includes(x) == false) {
+                            l.push(x)
+                            ctr = ctr + 1
                         }
+                    }
 
+                    for (i = 0; i < 10; i++) {
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
+
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
+                    }
+
+                    res.render('mcq', {
+                        title: 'Frontend Web Development',
+                        dom: 'Technical',
+                        ques: arr,
+                        mques: store,
+                        jugaad,
+                        name: message1
 
                     })
+
                 }
+
+
             })
+        }
+    })
 
 })
 
 app.get('/webexambackend', function (err, res) {
 
-            ans.findOne({
-                email: useremail,
-                title: 'Backend Web Development'
-            }, (err, user) => {
-                let errors = []
+    ans.findOne({
+        email: useremail,
+        title: 'Backend Web Development'
+    }, (err, user) => {
+        let errors = []
 
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
+                title: 'Backend Web Development'
+            }, (err, userTest) => {
+                if (userTest.length == 0 || userTest.length != 13) {
+                    res.render('no_ques', {
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
-                    myques.find({
-                        title: 'Backend Web Development'
-                    }, (err, userTest) => {
-                        if (userTest.length == 0 || userTest.length!=13) {
-                            res.render('no_ques', {
-                                noques: 'Questions are yet to be added'
-                            })
-                        } else {
-                            var n = userTest.length
-                            var store=[]
-                            var arr = []
-                            var jugaad=[]
-                            l = []
-                            ctr = 0
-                            while (ctr != 10) {
-                                x = Math.floor(Math.random() * n)
-                                if (l.includes(x) == false) {
-                                    l.push(x)
-                                    ctr = ctr + 1
-                                }
-                            }
-
-                            for (i = 0; i < 10; i++) {
-                            if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
-
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
-                            }
-
-                            res.render('mcq', {
-                                title: 'Backend Web Development',
-                                dom: 'Technical',
-                                ques: arr,
-                                jugaad,
-                                mques:store,
-                                name: message1
-
-                            })
-
+                    var n = userTest.length
+                    var store = []
+                    var arr = []
+                    var jugaad = []
+                    l = []
+                    ctr = 0
+                    while (ctr != 10) {
+                        x = Math.floor(Math.random() * n)
+                        if (l.includes(x) == false) {
+                            l.push(x)
+                            ctr = ctr + 1
                         }
+                    }
 
+                    for (i = 0; i < 10; i++) {
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
+
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
+                    }
+
+                    res.render('mcq', {
+                        title: 'Backend Web Development',
+                        dom: 'Technical',
+                        ques: arr,
+                        jugaad,
+                        mques: store,
+                        name: message1
 
                     })
+
                 }
+
+
             })
+        }
+    })
 
 })
 
 app.get('/comcodexam', auth, function (err, res) {
 
-            ans.findOne({
-                email: useremail,
+    ans.findOne({
+        email: useremail,
+        title: 'Competitive Coding'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
                 title: 'Competitive Coding'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
+            }, (err, userTest) => {
+                if (userTest.length == 0 || userTest.length != 10) {
+                    res.render('no_ques', {
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
-                    myques.find({
-                        title: 'Competitive Coding'
-                    }, (err, userTest) => {
-                        if (userTest.length == 0 || userTest.length!=10) {
-                            res.render('no_ques', {
-                                noques: 'Questions are yet to be added'
-                            })
-                        } else {
 
-                            var n = userTest.length
-                            var arr = []
-                            var store=[]
-                            var jugaad=[]
-                            //var store9=[]
-                            l = []
-                            ctr = 0
-                            while (ctr != 10) {
-                                x = Math.floor(Math.random() * n)
-                                if (l.includes(x) == false) {
-                                    l.push(x)
-                                    ctr = ctr + 1
-                                }
-                            }
-
-                            for (i = 0; i < 10; i++) {
-                                if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
-
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
-                                
-                            }
-
-                            res.render('mcq', {
-                                title: 'Competitive Coding',
-                                dom: 'Technical',
-                                ques: arr,
-                                mques:store,
-                                jugaad,
-                                name: message1
-
-                            })
+                    var n = userTest.length
+                    var arr = []
+                    var store = []
+                    var jugaad = []
+                    //var store9=[]
+                    l = []
+                    ctr = 0
+                    while (ctr != 10) {
+                        x = Math.floor(Math.random() * n)
+                        if (l.includes(x) == false) {
+                            l.push(x)
+                            ctr = ctr + 1
                         }
+                    }
+
+                    for (i = 0; i < 10; i++) {
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
+
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
+
+                    }
+
+                    res.render('mcq', {
+                        title: 'Competitive Coding',
+                        dom: 'Technical',
+                        ques: arr,
+                        mques: store,
+                        jugaad,
+                        name: message1
 
                     })
                 }
+
             })
+        }
+    })
 })
 
 
 app.get('/mlaiexam', auth, function (err, res) {
 
-            ans.findOne({
-                email: useremail,
+    ans.findOne({
+        email: useremail,
+        title: 'Machine Learning & Artificial Intelligence'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
                 title: 'Machine Learning & Artificial Intelligence'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
+            }, (err, userTest1) => {
+                if (userTest1.length == 0 || userTest1.length != 13) {
+                    res.render('no_ques', {
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
-                    myques.find({
-                        title: 'Machine Learning & Artificial Intelligence'
-                    }, (err, userTest1) => {
-                        if (userTest1.length == 0 || userTest1.length!=13) {
-                            res.render('no_ques', {
-                                noques: 'Questions are yet to be added'
-                            })
-                        } else {
-                            var n = userTest1.length
-                            var arr = []
-                            var store=[]
-                            var jugaad=[]
-                            l = []
-                            ctr1 = 0
-                            while (ctr1 != 10) {
-                                x = Math.floor(Math.random() * n)
-                                if (l.includes(x) == false) {
-                                    l.push(x)
-                                    ctr1 = ctr1 + 1
-                                }
-                            }
-
-                            for (i = 0; i < 10; i++) {
-                                if(userTest1[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest1[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
-
-                            }
-                            else{
-                                var value = userTest1[l[i]].ques
-                                arr.push(value)
-                            }
-                            }
-
-                            res.render('mcq', {
-                                title: 'Machine Learning & Artificial Intelligence',
-                                dom: 'Technical',
-                                ques: arr,
-                                mques:store,
-                                jugaad,
-                                name: message1
-
-                            })
+                    var n = userTest1.length
+                    var arr = []
+                    var store = []
+                    var jugaad = []
+                    l = []
+                    ctr1 = 0
+                    while (ctr1 != 10) {
+                        x = Math.floor(Math.random() * n)
+                        if (l.includes(x) == false) {
+                            l.push(x)
+                            ctr1 = ctr1 + 1
                         }
+                    }
+
+                    for (i = 0; i < 10; i++) {
+                        if (userTest1[l[i]].ques.includes("$")) {
+                            var str = userTest1[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
+
+                        } else {
+                            var value = userTest1[l[i]].ques
+                            arr.push(value)
+                        }
+                    }
+
+                    res.render('mcq', {
+                        title: 'Machine Learning & Artificial Intelligence',
+                        dom: 'Technical',
+                        ques: arr,
+                        mques: store,
+                        jugaad,
+                        name: message1
+
                     })
                 }
             })
+        }
+    })
 })
 
 app.get('/appexam', auth, function (err, res) {
 
-            ans.findOne({
-                email: useremail,
+    ans.findOne({
+        email: useremail,
+        title: 'App Development'
+    }, (err, user) => {
+        let errors = []
+        if (user) {
+            errors.push({
+                text: 'You have already attempted this test!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
+            myques.find({
                 title: 'App Development'
-            }, (err, user) => {
-                let errors = []
-                if (user) {
-                    errors.push({
-                        text: 'You have already attempted this test!'
-                    })
-                    res.render('exam', {
-                        msg: message1,
-                        errors: errors
+            }, (err, userTest1) => {
+                if (userTest1.length == 0 || userTest1.length != 12) {
+                    res.render('no_ques', {
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
-                    myques.find({
-                        title: 'App Development'
-                    }, (err, userTest1) => {
-                        if (userTest1.length == 0 || userTest1.length!=12) {
-                            res.render('no_ques', {
-                                noques: 'Questions are yet to be added'
-                            })
-                        } else {
-                            var n = userTest1.length
-                            var arr = []
-                            var store=[]
-                            var jugaad=[]
-                            l = []
-                            ctr1 = 0
-                            while (ctr1 != 10) {
-                                x = Math.floor(Math.random() * n)
-                                if (l.includes(x) == false) {
-                                    l.push(x)
-                                    ctr1 = ctr1 + 1
-                                }
-                            }
-                            for (i = 0; i < 10; i++) {
-                                if(userTest1[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest1[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
-
-                            }
-                            else{
-                                var value = userTest1[l[i]].ques
-                                arr.push(value)
-                            }
-                            }
-
-                            res.render('mcq', {
-                                title: 'App Development',
-                                dom: 'Technical',
-                                ques: arr,
-                                mques:store,
-                                jugaad,
-                                name: message1
-
-                            })
+                    var n = userTest1.length
+                    var arr = []
+                    var store = []
+                    var jugaad = []
+                    l = []
+                    ctr1 = 0
+                    while (ctr1 != 10) {
+                        x = Math.floor(Math.random() * n)
+                        if (l.includes(x) == false) {
+                            l.push(x)
+                            ctr1 = ctr1 + 1
                         }
+                    }
+                    for (i = 0; i < 10; i++) {
+                        if (userTest1[l[i]].ques.includes("$")) {
+                            var str = userTest1[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
+
+                        } else {
+                            var value = userTest1[l[i]].ques
+                            arr.push(value)
+                        }
+                    }
+
+                    res.render('mcq', {
+                        title: 'App Development',
+                        dom: 'Technical',
+                        ques: arr,
+                        mques: store,
+                        jugaad,
+                        name: message1
+
                     })
                 }
-
             })
+        }
+
+    })
 })
 
 app.get('/opexam', auth, function (err, res) {
@@ -789,15 +789,15 @@ app.get('/opexam', auth, function (err, res) {
             myques.find({
                 title: 'Operations'
             }, (err, userTest) => {
-                if (userTest.length == 0 || userTest.length!=8) {
+                if (userTest.length == 0 || userTest.length != 8) {
                     res.render('no_ques', {
-                        noques: 'Questions are yet to be added'
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
                     var n = userTest.length
                     var arr = []
-                    var store=[]
-                    var jugaad=[]
+                    var store = []
+                    var jugaad = []
                     l = []
                     ctr = 0
                     while (ctr != 8) {
@@ -809,25 +809,25 @@ app.get('/opexam', auth, function (err, res) {
                     }
 
                     for (i = 0; i < 8; i++) {
-                        if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
 
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
                     }
 
                     res.render('mcq', {
                         title: 'Operations',
                         dom: 'Management',
                         ques: arr,
-                        mques:store,
+                        mques: store,
                         jugaad,
                         name: message1
 
@@ -858,16 +858,16 @@ app.get('/sponsexam', auth, function (err, res) {
             myques.find({
                 title: 'Sponsorship'
             }, (err, userTest) => {
-                if (userTest.length == 0 || userTest.length!=5) {
+                if (userTest.length == 0 || userTest.length != 5) {
                     res.render('no_ques', {
-                        noques: 'Questions are yet to be added'
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
                     var n = userTest.length
                     var arr = []
                     l = []
-                    var jugaad=[]
-                    var store=[]
+                    var jugaad = []
+                    var store = []
                     ctr = 0
                     while (ctr != 5) {
                         x = Math.floor(Math.random() * n)
@@ -878,25 +878,25 @@ app.get('/sponsexam', auth, function (err, res) {
                     }
 
                     for (i = 0; i < 5; i++) {
-                        if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
 
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
                     }
 
                     res.render('mcq', {
                         title: 'Sponsorship',
                         dom: 'Management',
                         ques: arr,
-                        mques:store,
+                        mques: store,
                         jugaad,
                         name: message1
 
@@ -926,16 +926,16 @@ app.get('/cwexam', auth, function (err, res) {
             myques.find({
                 title: 'Content Writing'
             }, (err, userTest) => {
-                if (userTest.length == 0 || userTest.length!=9) {
+                if (userTest.length == 0 || userTest.length != 9) {
                     res.render('no_ques', {
-                        noques: 'Questions are yet to be added'
+                        noques: 'Questions are yet to be added.'
                     })
                 } else {
                     var n = userTest.length
-                    var arr =[]
-                    var store=[]
+                    var arr = []
+                    var store = []
                     l = []
-                    var jugaad=[]
+                    var jugaad = []
                     ctr = 0
                     while (ctr != 9) {
                         x = Math.floor(Math.random() * n)
@@ -946,25 +946,25 @@ app.get('/cwexam', auth, function (err, res) {
                     }
 
                     for (i = 0; i < 9; i++) {
-                        if(userTest[l[i]].ques.includes("$"))
-                            {
-                                var str=userTest[l[i]].ques
-                                jugaad.push(str)
-                                var s=str.split("$")
-                                store.push({data:s})
+                        if (userTest[l[i]].ques.includes("$")) {
+                            var str = userTest[l[i]].ques
+                            jugaad.push(str)
+                            var s = str.split("$")
+                            store.push({
+                                data: s
+                            })
 
-                            }
-                            else{
-                                var value = userTest[l[i]].ques
-                                arr.push(value)
-                            }
+                        } else {
+                            var value = userTest[l[i]].ques
+                            arr.push(value)
+                        }
                     }
 
                     res.render('mcq', {
                         title: 'Content Writing',
                         dom: 'Management',
                         ques: arr,
-                        mques:store,
+                        mques: store,
                         jugaad,
                         name: message1
 
