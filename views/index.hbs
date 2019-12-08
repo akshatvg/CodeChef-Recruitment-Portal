@@ -21,6 +21,10 @@
 	<!-- Particle.js-->
 	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+	<!-- reCaptcha -->
+	<script type="text/javascript"
+		src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
+
 </head>
 
 <body>
@@ -238,9 +242,6 @@
 	<!-- BG -->
 	<div id="bg"></div>
 
-	<!-- reCaptcha -->
-	<script src="https://www.google.com/recaptcha/api.js?render=6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb"></script>
-
 	<!-- Scripts -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/browser.min.js"></script>
@@ -267,7 +268,7 @@
 					console.log(data)
 					if (emailsend.value == 'admin' && passend.value == 'admin') {
 						window.location.href = '/admin'
-							
+
 					}
 					else {
 						$.ajax({
@@ -279,7 +280,7 @@
 							success: function (data) {
 								console.log('success')
 								window.location.href = '/verify'
-								
+
 							},
 							error: function (err) {
 								console.log('error')
