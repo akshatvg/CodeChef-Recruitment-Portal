@@ -436,7 +436,7 @@ app.get('/webexam', function (err, res) {
         } else {
             ans.findOne({
                 email: useremail,
-                title: 'Web Development'
+                title: 'Frontend Web Development'
             }, (err, user) => {
                 let errors = []
 
@@ -450,15 +450,16 @@ app.get('/webexam', function (err, res) {
                     })
                 } else {
                     myques.find({
-                        title: 'Web Development'
+                        title: 'Frontend Web Development'
                     }, (err, userTest) => {
-                        if (userTest.length == 0) {
+                        if (userTest.length == 0 || userTest.length!=18) {
                             res.render('no_ques', {
                                 noques: 'Questions are yet to be added'
                             })
                         } else {
                             var n = userTest.length
                             var arr = []
+                            var store=[]
                             l = []
                             ctr = 0
                             while (ctr != 10) {
@@ -470,14 +471,24 @@ app.get('/webexam', function (err, res) {
                             }
 
                             for (i = 0; i < 10; i++) {
+                                if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
                                 var value = userTest[l[i]].ques
                                 arr.push(value)
                             }
+                            }
 
-                            res.render('test', {
-                                title: 'Web Development',
+                            res.render('mcq', {
+                                title: 'Frontend Web Development',
                                 dom: 'Technical',
                                 ques: arr,
+                                mques:store,
                                 name: message1
 
                             })
@@ -516,7 +527,7 @@ app.get('/webexambackend', function (err, res) {
         } else {
             ans.findOne({
                 email: useremail,
-                title: 'Web Development'
+                title: 'Backend Web Development'
             }, (err, user) => {
                 let errors = []
 
@@ -530,14 +541,15 @@ app.get('/webexambackend', function (err, res) {
                     })
                 } else {
                     myques.find({
-                        title: 'Web Development'
+                        title: 'Backend Web Development'
                     }, (err, userTest) => {
-                        if (userTest.length == 0) {
+                        if (userTest.length == 0 || userTest.length!=13) {
                             res.render('no_ques', {
                                 noques: 'Questions are yet to be added'
                             })
                         } else {
                             var n = userTest.length
+                            var store=[]
                             var arr = []
                             l = []
                             ctr = 0
@@ -550,14 +562,24 @@ app.get('/webexambackend', function (err, res) {
                             }
 
                             for (i = 0; i < 10; i++) {
+                            if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
                                 var value = userTest[l[i]].ques
                                 arr.push(value)
                             }
+                            }
 
-                            res.render('test', {
-                                title: 'Web Development',
+                            res.render('mcq', {
+                                title: 'Backend Web Development',
                                 dom: 'Technical',
                                 ques: arr,
+                                mques:store,
                                 name: message1
 
                             })
@@ -611,13 +633,16 @@ app.get('/comcodexam', auth, function (err, res) {
                     myques.find({
                         title: 'Competitive Coding'
                     }, (err, userTest) => {
-                        if (userTest.length == 0) {
+                        if (userTest.length == 0 || userTest.length!=10) {
                             res.render('no_ques', {
                                 noques: 'Questions are yet to be added'
                             })
                         } else {
+
                             var n = userTest.length
                             var arr = []
+                            var store=[]
+                            //var store9=[]
                             l = []
                             ctr = 0
                             while (ctr != 10) {
@@ -629,14 +654,25 @@ app.get('/comcodexam', auth, function (err, res) {
                             }
 
                             for (i = 0; i < 10; i++) {
+                                if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
                                 var value = userTest[l[i]].ques
                                 arr.push(value)
                             }
+                                
+                            }
 
-                            res.render('test', {
+                            res.render('mcq', {
                                 title: 'Competitive Coding',
                                 dom: 'Technical',
                                 ques: arr,
+                                mques:store,
                                 name: message1
 
                             })
@@ -688,13 +724,14 @@ app.get('/mlaiexam', auth, function (err, res) {
                     myques.find({
                         title: 'Machine Learning & Artificial Intelligence'
                     }, (err, userTest1) => {
-                        if (userTest1.length == 0) {
+                        if (userTest1.length == 0 || userTest1.length!=13) {
                             res.render('no_ques', {
                                 noques: 'Questions are yet to be added'
                             })
                         } else {
                             var n = userTest1.length
                             var arr = []
+                            var store=[]
                             l = []
                             ctr1 = 0
                             while (ctr1 != 10) {
@@ -706,14 +743,24 @@ app.get('/mlaiexam', auth, function (err, res) {
                             }
 
                             for (i = 0; i < 10; i++) {
+                                if(userTest1[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest1[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
                                 var value = userTest1[l[i]].ques
                                 arr.push(value)
                             }
+                            }
 
-                            res.render('test', {
+                            res.render('mcq', {
                                 title: 'Machine Learning & Artificial Intelligence',
                                 dom: 'Technical',
                                 ques: arr,
+                                mques:store,
                                 name: message1
 
                             })
@@ -762,13 +809,14 @@ app.get('/appexam', auth, function (err, res) {
                     myques.find({
                         title: 'App Development'
                     }, (err, userTest1) => {
-                        if (userTest1.length == 0) {
+                        if (userTest1.length == 0 || userTest1.length!=12) {
                             res.render('no_ques', {
                                 noques: 'Questions are yet to be added'
                             })
                         } else {
                             var n = userTest1.length
                             var arr = []
+                            var store=[]
                             l = []
                             ctr1 = 0
                             while (ctr1 != 10) {
@@ -779,14 +827,24 @@ app.get('/appexam', auth, function (err, res) {
                                 }
                             }
                             for (i = 0; i < 10; i++) {
+                                if(userTest1[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest1[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
                                 var value = userTest1[l[i]].ques
                                 arr.push(value)
                             }
+                            }
 
-                            res.render('test', {
+                            res.render('mcq', {
                                 title: 'App Development',
                                 dom: 'Technical',
                                 ques: arr,
+                                mques:store,
                                 name: message1
 
                             })
@@ -819,16 +877,17 @@ app.get('/opexam', auth, function (err, res) {
             myques.find({
                 title: 'Operations'
             }, (err, userTest) => {
-                if (userTest.length == 0) {
+                if (userTest.length == 0 || userTest.length!=8) {
                     res.render('no_ques', {
                         noques: 'Questions are yet to be added'
                     })
                 } else {
                     var n = userTest.length
                     var arr = []
+                    var store=[]
                     l = []
                     ctr = 0
-                    while (ctr != 5) {
+                    while (ctr != 8) {
                         x = Math.floor(Math.random() * n)
                         if (l.includes(x) == false) {
                             l.push(x)
@@ -836,15 +895,25 @@ app.get('/opexam', auth, function (err, res) {
                         }
                     }
 
-                    for (i = 0; i < 5; i++) {
-                        var value = userTest[l[i]].ques
-                        arr.push(value)
+                    for (i = 0; i < 8; i++) {
+                        if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
+                                var value = userTest[l[i]].ques
+                                arr.push(value)
+                            }
                     }
 
-                    res.render('test', {
+                    res.render('mcq', {
                         title: 'Operations',
                         dom: 'Management',
                         ques: arr,
+                        mques:store,
                         name: message1
 
                     })
@@ -874,7 +943,7 @@ app.get('/sponsexam', auth, function (err, res) {
             myques.find({
                 title: 'Sponsorship'
             }, (err, userTest) => {
-                if (userTest.length == 0) {
+                if (userTest.length == 0 || userTest.length!=5) {
                     res.render('no_ques', {
                         noques: 'Questions are yet to be added'
                     })
@@ -882,6 +951,7 @@ app.get('/sponsexam', auth, function (err, res) {
                     var n = userTest.length
                     var arr = []
                     l = []
+                    var store=[]
                     ctr = 0
                     while (ctr != 5) {
                         x = Math.floor(Math.random() * n)
@@ -892,14 +962,24 @@ app.get('/sponsexam', auth, function (err, res) {
                     }
 
                     for (i = 0; i < 5; i++) {
-                        var value = userTest[l[i]].ques
-                        arr.push(value)
+                        if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
+                                var value = userTest[l[i]].ques
+                                arr.push(value)
+                            }
                     }
 
-                    res.render('test', {
+                    res.render('mcq', {
                         title: 'Sponsorship',
                         dom: 'Management',
                         ques: arr,
+                        mques:store,
                         name: message1
 
                     })
@@ -928,16 +1008,17 @@ app.get('/cwexam', auth, function (err, res) {
             myques.find({
                 title: 'Content Writing'
             }, (err, userTest) => {
-                if (userTest.length == 0) {
+                if (userTest.length == 0 || userTest.length!=9) {
                     res.render('no_ques', {
                         noques: 'Questions are yet to be added'
                     })
                 } else {
                     var n = userTest.length
-                    var arr = []
+                    var arr =[]
+                    var store=[]
                     l = []
                     ctr = 0
-                    while (ctr != 5) {
+                    while (ctr != 9) {
                         x = Math.floor(Math.random() * n)
                         if (l.includes(x) == false) {
                             l.push(x)
@@ -945,15 +1026,25 @@ app.get('/cwexam', auth, function (err, res) {
                         }
                     }
 
-                    for (i = 0; i < 5; i++) {
-                        var value = userTest[l[i]].ques
-                        arr.push(value)
+                    for (i = 0; i < 9; i++) {
+                        if(userTest[l[i]].ques.includes("$"))
+                            {
+                                var str=userTest[l[i]].ques
+                                var s=str.split("$")
+                                store.push({data:s})
+
+                            }
+                            else{
+                                var value = userTest[l[i]].ques
+                                arr.push(value)
+                            }
                     }
 
-                    res.render('test', {
+                    res.render('mcq', {
                         title: 'Content Writing',
                         dom: 'Management',
                         ques: arr,
+                        mques:store,
                         name: message1
 
                     })
