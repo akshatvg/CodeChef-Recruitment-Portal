@@ -253,7 +253,7 @@
 			e.preventDefault()
 			grecaptcha.ready(() => {
 				grecaptcha.execute('6Ld_gsYUAAAAAKyxXO0Cn1wezKzIWutm8fuG_gdb', {
-					action: '/userLogin'
+					action: '/'
 				}).then((token) => {
 
 					var emailsend = document.querySelector('#lemail')
@@ -265,22 +265,9 @@
 						recaptcha: token
 					}
 					console.log(data)
-					if (emailsend == 'admin' && passend == 'admin') {
-						$.ajax({
-							url: '/userLogin',
-							type: "POST",
-							data: {
-								display: JSON.stringify(data)
-							},
-							success: function (data) {
-								console.log('success')
-								window.location.href = '/admin'
-							},
-							error: function (err) {
-								console.log('error')
-							}
-
-						})
+					if (emailsend.value == 'admin' && passend.value == 'admin') {
+						window.location.href = '/admin'
+							
 					}
 					else {
 						$.ajax({
@@ -291,7 +278,8 @@
 							},
 							success: function (data) {
 								console.log('success')
-								window.location.href = '/exam'
+								window.location.href = '/verify'
+								
 							},
 							error: function (err) {
 								console.log('error')

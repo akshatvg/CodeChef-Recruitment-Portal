@@ -57,26 +57,28 @@ var auth = function (req, res, next) {
     } else
         return res.sendStatus(401);
 };
-
+var bodydata
 var verifyCaptcha = (req, res, next) => {
-    var bodydata = JSON.parse(req.body.display)
+    bodydata = JSON.parse(req.body.display)
+    
     if (!bodydata['recaptcha']) {
         return res.json({
             status: false
         });
     }
-    console.log('wwwwwww')
+    
     const token = bodydata['recaptcha'] || req.query['recaptcha'];
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTSECRET}&response=${token}&remoteip=${req.connection.remoteAddress}`;
 
     request(verificationUrl, (error, response, body) => {
         body = JSON.parse(body);
+        
         if (body.success !== undefined && !body.success) {
+            console.log(body)
             return res.json({
                 status: false
             });
         }
-        req.session.captcha = true;
         next();
     });
 };
@@ -94,6 +96,51 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/verify', (req, res) => {
+    bigError2 = []
+    bigSuccess = []
+    var lname = bodydata.email;
+    var lpass = bodydata.password;
+        console.log('wwwwwww1')
+        userRegister.find({
+            email: lname
+        }, (err, user) => {
+            let errors = []
+            if (err) {
+                throw err
+            }
+            console.log(user)
+            if (user.length == 0) {
+                errors.push({
+                    text: 'Invalid email'
+                })
+                bigError2 = errors
+                res.redirect('/index#login')
+            } else {
+                console.log(user[0].password)
+                bcrypt.compare(lpass, user[0].password, function (err, result) {
+                    if (result == false) {
+                        errors.push({
+                            text: 'Invalid password'
+                        })
+                        bigError2 = errors
+                        res.redirect('/index#login')
+                    } else {
+                        Name = user[0].name
+                        message1 = user[0].name
+                        useremail = user[0].email
+                        console.log("message1: " + message1)
+                        req.session.userName = Name
+                        res.redirect('/exam')
+                    }
+
+                })
+
+            }
+        })
+    
+    
+})
 var bigError1 = []
 var bigError2 = []
 var bigSuccess = []
@@ -187,56 +234,6 @@ app.post('/userlogin', verifyCaptcha, (req, res) => {
 
     userSession = req.session
     var bodydata = JSON.parse(req.body.display)
-    // console.log(bodydata)
-    var lname = bodydata.email;
-    var lpass = bodydata.password;
-    // console.log(lname)
-    // console.log(lpass)
-    bigError2 = []
-    bigSuccess = []
-    if (lname == 'admin' && lpass == 'admin') {
-        res.render('admin', {
-            msg: 'Admin'
-        })
-    } else {
-        userRegister.find({
-            email: lname
-        }, (err, user) => {
-            let errors = []
-            if (err) {
-                throw err
-            }
-            console.log(user)
-            if (user.length == 0) {
-                errors.push({
-                    text: 'Invalid email'
-                })
-                bigError2 = errors
-                res.redirect('/index#login')
-            } else {
-                console.log(user[0].password)
-                bcrypt.compare(lpass, user[0].password, function (err, result) {
-                    if (result == false) {
-                        errors.push({
-                            text: 'Invalid password'
-                        })
-                        bigError2 = errors
-                        res.redirect('/index#login')
-                    } else {
-                        Name = user[0].name
-                        message1 = user[0].name
-                        useremail = user[0].email
-                        console.log("message1: " + message1)
-                        req.session.userName = Name
-                        res.redirect('/exam')
-                    }
-
-                })
-
-            }
-        })
-    }
-
 
 })
 
