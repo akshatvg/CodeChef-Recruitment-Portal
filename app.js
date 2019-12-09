@@ -170,25 +170,23 @@ app.post('/userSignup', (req, res) => {
         })
     }
     if (rno.length == 9) {
-        if(rno[1]!=9)
-        {
+        if (rno[1] != 9) {
             errors.push({
                 text: "Only first years can attempt the test!"
             })
-        }
-        else{
-            var check = /^19[BM][A-Z]{2}[0-9]{4}$/
-        if (rno.match(check)) {
-            console.log('true')
-
         } else {
-            console.log('false')
-            errors.push({
-                text: "Invalid registration number"
-            })
+            var check = /^19[BM][A-Z]{2}[0-9]{4}$/
+            if (rno.match(check)) {
+                console.log('true')
+
+            } else {
+                console.log('false')
+                errors.push({
+                    text: "Invalid registration number"
+                })
+            }
         }
-        }
-        
+
     }
 
     if (errors.length > 0) {
