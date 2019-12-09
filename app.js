@@ -166,20 +166,27 @@ app.post('/userSignup', (req, res) => {
     }
     if (rno.length != 9) {
         errors.push({
-            text: "Invalid registration number"
+            text: "Invalid registration number!"
         })
     }
     if (rno.length == 9) {
-        var check = /^1[89][BM][A-Z]{2}[0-9]{4}$/
-        if (rno.match(check)) {
-            console.log('true')
-
-        } else {
-            console.log('false')
+        if (rno[1] != 9) {
             errors.push({
-                text: "Invalid registration number"
+                text: "Only first years can attempt the test!"
             })
+        } else {
+            var check = /^19[BM][A-Z]{2}[0-9]{4}$/
+            if (rno.match(check)) {
+                console.log('true')
+
+            } else {
+                console.log('false')
+                errors.push({
+                    text: "Invalid registration number"
+                })
+            }
         }
+
     }
 
     if (errors.length > 0) {
@@ -637,7 +644,7 @@ app.get('/mlaiexam', auth, function (err, res) {
 
     ans.findOne({
         email: useremail,
-        title: 'Machine Learning & Artificial Intelligence'
+        title: 'Machine Learning'
     }, (err, user) => {
         let errors = []
         if (user) {
@@ -650,7 +657,7 @@ app.get('/mlaiexam', auth, function (err, res) {
             })
         } else {
             myques.find({
-                title: 'Machine Learning & Artificial Intelligence'
+                title: 'Machine Learning'
             }, (err, userTest1) => {
                 if (userTest1.length == 0 || userTest1.length != 13) {
                     res.render('no_ques', {
