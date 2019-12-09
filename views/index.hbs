@@ -118,7 +118,7 @@
 					{{#each errors1}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p style="color: red;">{{this.text}}</p>
+						<p style="color: red;" class="clear">{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields mainpg">
@@ -132,7 +132,7 @@
 						</div>
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" required onkeyup="checkEmail()" />
+							<input type="email" name="email" id="email" required onkeyup="checkEmail()" />
 						</div>
 						<div class="field half">
 							<label for="regno">Registration Number</label>
@@ -141,7 +141,7 @@
 						</div>
 						<div class="field half">
 							<label for="phoneno">Phone Number</label>
-							<input type="text" name="phoneno" id="phoneno" required onkeyup="checkPhone()" />
+							<input type="tel" name="phoneno" id="phoneno" required onkeyup="checkPhone()" />
 						</div>
 						<div class="field half">
 							<label for="password">Password</label>
@@ -173,7 +173,7 @@
 						</div>
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" required />
+							<input type="email" name="email" id="email" required />
 						</div>
 						<div class="field">
 							<label for="message">Message</label>
@@ -205,13 +205,13 @@
 					{{#each errors2}}
 					<div class="alert alert-danger">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p style="color: red;">{{this.text}}</p>
+						<p style="color: red;" class="clear">{{this.text}}</p>
 					</div>
 					{{/each}}
 					{{#each success}}
 					<div class="alert alert-success">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p style="color: rgb(5, 97, 5);">{{this.text}}</p>
+						<p style="color: rgb(5, 97, 5);"class="clear">{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields mainpg">
@@ -297,6 +297,11 @@
 			})
 		})
 
+	</script>
+	<script>
+		setTimeout(function() {
+		$(".clear").fadeOut().empty();
+		}, 5000);
 	</script>
 
 	<script>
