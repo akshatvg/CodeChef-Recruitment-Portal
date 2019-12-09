@@ -90,6 +90,7 @@ var Name
 var message1
 var newarr = []
 var useremail
+var rnumber
 
 app.get('/', (req, res) => {
     res.render('index', {
@@ -130,6 +131,7 @@ app.get('/verify', (req, res) => {
                     Name = user[0].name
                     message1 = user[0].name
                     useremail = user[0].email
+                    rnumber=user[0].regno
                     console.log("message1: " + message1)
                     req.session.userName = Name
                     res.redirect('/exam')
@@ -361,11 +363,13 @@ app.post('/storeResponse', (req, res) => {
     var newobj = {
         name: message1,
         email: useremail,
+        regno:rnumber,
+        date:new Date(),
         domain: data.domain,
         title: data.title,
         response: arr
     }
-
+    console.log(newobj)
     var resp = new ans(newobj)
     resp.save(() => {
         console.log('response added')
@@ -422,9 +426,26 @@ app.get('/success', (req, res) => {
 
 
 app.get('/webexam', function (err, res) {
+    ans.find({
+        regno:rnumber,
+        domain: 'Technical'
+    }, (err, manyuser) => {
+        if (err) {
+            throw err
+        }
 
+        if (manyuser.length == 2 && manyuser[0].title!=manyuser[1].title) {
+            let errors = []
+            errors.push({
+                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Frontend Web Development'
     }, (err, user) => {
         let errors = []
@@ -491,13 +512,32 @@ app.get('/webexam', function (err, res) {
             })
         }
     })
+}
+    })
 
 })
 
 app.get('/webexambackend', function (err, res) {
+    ans.find({
+        regno:rnumber,
+        domain: 'Technical'
+    }, (err, manyuser) => {
+        if (err) {
+            throw err
+        }
 
+        if (manyuser.length == 2 && manyuser[0].title!=manyuser[1].title) {
+            let errors = []
+            errors.push({
+                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Backend Web Development'
     }, (err, user) => {
         let errors = []
@@ -564,13 +604,31 @@ app.get('/webexambackend', function (err, res) {
             })
         }
     })
-
+        }
+    })
 })
 
 app.get('/comcodexam', auth, function (err, res) {
+    ans.find({
+        regno:rnumber,
+        domain: 'Technical'
+    }, (err, manyuser) => {
+        if (err) {
+            throw err
+        }
 
+        if (manyuser.length == 2 && manyuser[0].title!=manyuser[1].title) {
+            let errors = []
+            errors.push({
+                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Competitive Coding'
     }, (err, user) => {
         let errors = []
@@ -637,13 +695,32 @@ app.get('/comcodexam', auth, function (err, res) {
             })
         }
     })
+}
+    })
 })
 
 
 app.get('/mlaiexam', auth, function (err, res) {
+    ans.find({
+        regno:rnumber,
+        domain: 'Technical'
+    }, (err, manyuser) => {
+        if (err) {
+            throw err
+        }
 
+        if (manyuser.length == 2 && manyuser[0].title!=manyuser[1].title) {
+            let errors = []
+            errors.push({
+                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Machine Learning'
     }, (err, user) => {
         let errors = []
@@ -706,12 +783,31 @@ app.get('/mlaiexam', auth, function (err, res) {
             })
         }
     })
+}
+    })
 })
 
 app.get('/appexam', auth, function (err, res) {
+    ans.find({
+        regno:rnumber,
+        domain: 'Technical'
+    }, (err, manyuser) => {
+        if (err) {
+            throw err
+        }
 
+        if (manyuser.length == 2 && manyuser[0].title!=manyuser[1].title) {
+            let errors = []
+            errors.push({
+                text: 'You cannot attempt more than 2 subdomains in technical domain!'
+            })
+            res.render('exam', {
+                msg: message1,
+                errors: errors
+            })
+        } else {
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'App Development'
     }, (err, user) => {
         let errors = []
@@ -774,12 +870,14 @@ app.get('/appexam', auth, function (err, res) {
         }
 
     })
+}
+    })
 })
 
 app.get('/opexam', auth, function (err, res) {
 
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Operations'
     }, (err, user) => {
         let errors = []
@@ -848,7 +946,7 @@ app.get('/opexam', auth, function (err, res) {
 app.get('/sponsexam', auth, function (err, res) {
 
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Sponsorship'
     }, (err, user) => {
         let errors = []
@@ -917,7 +1015,7 @@ app.get('/sponsexam', auth, function (err, res) {
 app.get('/cwexam', auth, function (err, res) {
 
     ans.findOne({
-        email: useremail,
+        regno: rnumber,
         title: 'Content Writing'
     }, (err, user) => {
         let errors = []

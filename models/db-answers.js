@@ -9,6 +9,12 @@ var data= new mongoose.Schema({
     email:{
         type:String
     },
+    regno:{
+        type:String
+    },
+    date: {
+        type: Date
+    },
     domain:{
         type:String
     },
