@@ -637,7 +637,7 @@ app.get('/mlaiexam', auth, function (err, res) {
 
     ans.findOne({
         email: useremail,
-        title: 'Machine Learning & Artificial Intelligence'
+        title: 'Machine Learning'
     }, (err, user) => {
         let errors = []
         if (user) {
@@ -650,7 +650,7 @@ app.get('/mlaiexam', auth, function (err, res) {
             })
         } else {
             myques.find({
-                title: 'Machine Learning & Artificial Intelligence'
+                title: 'Machine Learning'
             }, (err, userTest1) => {
                 if (userTest1.length == 0 || userTest1.length != 13) {
                     res.render('no_ques', {
