@@ -729,7 +729,7 @@ app.get('/appexam', auth, function (err, res) {
             myques.find({
                 title: 'App Development'
             }, (err, userTest1) => {
-                if (userTest1.length == 0 || userTest1.length != 12) {
+                if (userTest1.length == 0 || userTest1.length != 13) {
                     res.render('no_ques', {
                         noques: 'Questions are yet to be added.'
                     })
