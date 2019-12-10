@@ -24,7 +24,7 @@ var bcrypt = require('bcryptjs')
 
 var rateLimit = require('express-rate-limit')
 
-var port = process.env.PORT || 3002
+var port = process.env.PORT || 80
 
 app.use(session({
     secret: 'hello',
@@ -1153,5 +1153,5 @@ app.use(function (req, res) {
 });
 
 app.listen(port, () => {
-    console.log('Server is running on http://localhost:3002')
+    console.log('Server is running on http://localhost:80')
 })
