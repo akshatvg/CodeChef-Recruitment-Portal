@@ -205,6 +205,17 @@ app.post('/userSignup', (req, res) => {
                 bigError1 = errors
                 res.redirect('/index#sign-up')
             } else {
+                userRegister.findOne({
+                   email:uemail
+                }).then((user) => {
+                    if (user) {
+                        errors.push({
+                            text: 'User already exists'
+                        })
+                        bigError1 = errors
+                        res.redirect('/index#sign-up')
+                    }
+                    else{
                 bcrypt.hash(pass, 10, function (err, hash) {
                     console.log(hash)
                     if (err) {
@@ -236,6 +247,8 @@ app.post('/userSignup', (req, res) => {
 
             }
         })
+    }
+})
     }
 })
 
