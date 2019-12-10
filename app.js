@@ -336,6 +336,14 @@ app.get('/Akshat_Is_Awesome', function (req, res) {
 
 })
 
+app.get('/Nautanki', function (req, res) {
+    message2 = ""
+    res.render('Nautanki', {
+        msg: 'Admin',
+    })
+
+})
+
 app.get('/logout', auth, function (req, res) {
     userSession = req.session;
     Name = undefined
