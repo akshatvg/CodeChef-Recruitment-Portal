@@ -211,14 +211,14 @@
 					{{#each success}}
 					<div class="alert alert-success">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<p style="color: rgb(5, 97, 5);"class="clear">{{this.text}}</p>
+						<p style="color: rgb(5, 97, 5);" class="clear">{{this.text}}</p>
 					</div>
 					{{/each}}
 					<div class="fields mainpg">
 
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="lemail" required onkeyup="checkEmail()" />
+							<input type="email" name="email" id="lemail" required onkeyup="checkEmail()" />
 						</div>
 						<div class="field half">
 							<label for="password">Password</label>
@@ -299,12 +299,13 @@
 
 	</script>
 	<script>
-		setTimeout(function() {
-		$(".clear").fadeOut().empty();
+		setTimeout(function () {
+			$(".clear").fadeOut().empty();
 		}, 5000);
 	</script>
 
-	<script>
+	{{!-- <script>
+
 		let email = document.getElementById("email");
 		let phoneno = document.getElementById("phoneno");
 		let regno = document.getElementById("regno");
@@ -381,7 +382,7 @@
 			}
 		}
 
-	</script>
+	</script> --}}
 </body>
 
 </html>
