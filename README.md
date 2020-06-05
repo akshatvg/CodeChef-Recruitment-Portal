@@ -17,7 +17,7 @@ Web portal for recruitments for the core of 2019 for CodeChef-VIT.
 
 ## Requirements
 
-[![GitHub top language](https://img.shields.io/github/languages/top/akshatvg/CodeChef-Recruitment-Portal?logo=html&style=social)](https://github.com/akshatvg/)
+[![GitHub top language](https://img.shields.io/github/languages/top/akshatvg/CodeChef-Recruitment-Portal?logo=javascript&style=social)](https://github.com/akshatvg/)
 
 The source code of this project is written in **`HTML/CSS/JS, Node.js`**. So, you need to have npm and Node.js installed to run this project along with a MongoDB account.
 
